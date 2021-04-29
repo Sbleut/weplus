@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Categorie
      * @ORM\Column(type="string", length=255)
      */
     private $image_catego_alt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Services::class, mappedBy="categorie")
+     */
+    private $serviceCat;
+
+    public function __construct()
+    {
+        $this->serviceCat = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class Categorie
     public function setImageCategoAlt(string $image_catego_alt): self
     {
         $this->image_catego_alt = $image_catego_alt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Services[]
+     */
+    public function getServiceCat(): Collection
+    {
+        return $this->serviceCat;
+    }
+
+    public function addServiceCat(Services $serviceCat): self
+    {
+        if (!$this->serviceCat->contains($serviceCat)) {
+            $this->serviceCat[] = $serviceCat;
+            $serviceCat->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceCat(Services $serviceCat): self
+    {
+        if ($this->serviceCat->removeElement($serviceCat)) {
+            // set the owning side to null (unless already changed)
+            if ($serviceCat->getCategorie() === $this) {
+                $serviceCat->setCategorie(null);
+            }
+        }
 
         return $this;
     }

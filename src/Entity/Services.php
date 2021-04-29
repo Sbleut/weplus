@@ -38,9 +38,10 @@ class Services
     private $image_service_alt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="serviceCat")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $catego;
+    private $categorie;
 
     public function getId(): ?int
     {
@@ -95,14 +96,14 @@ class Services
         return $this;
     }
 
-    public function getCatego(): ?string
+    public function getCategorie(): ?Categorie
     {
-        return $this->catego;
+        return $this->categorie;
     }
 
-    public function setCatego(string $catego): self
+    public function setCategorie(?Categorie $categorie): self
     {
-        $this->catego = $catego;
+        $this->categorie = $categorie;
 
         return $this;
     }
