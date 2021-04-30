@@ -3,23 +3,27 @@
 namespace App\Form;
 
 use App\Entity\Categorie;
+use App\Entity\Services;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CategorieType extends AbstractType
+class ServiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Title', TextType::class, [
+            ->add('name', TextType::class, [
                 'attr' => [ 
                     'maxlength' => '255'
                 ],
@@ -30,30 +34,8 @@ class CategorieType extends AbstractType
                     ])
                 ]
             ])
-            ->add('sub_title', TextType::class, [
-                'attr' => [ 
-                    'maxlength' => '255'
-                ],
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'max' => 255
-                    ])
-                ]
-            ])
-            ->add('description', TextareaType::class, [
-                'attr' => [ 
-                    'maxlength' => '2047'
-                ],
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'max' => 2047
-                    ])
-                ]
-            ])
-            ->add('image_catego', FileType::class, [
-                'label' => 'image_catego',
+            ->add('image_service', FileType::class, [
+                'label' => 'image_service',
                 'data_class' => null,
                 'constraints' => [
                     new File([
@@ -68,10 +50,21 @@ class CategorieType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'form-field',
-                    'placeholder' => 'Fichier justificatif'
+                    'placeholder' => 'Fichier image inférieur à 5 Mo'
                     ]
             ])
-            ->add('image_catego_alt', TextType::class, [
+            ->add('text', TextareaType::class, [
+                'attr' => [ 
+                    'maxlength' => '2048'
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'max' => 2048
+                    ])
+                ]
+            ])
+            ->add('image_service_alt', TextType::class, [
                 'attr' => [ 
                     'maxlength' => '255'
                 ],
@@ -82,19 +75,21 @@ class CategorieType extends AbstractType
                     ])
                 ]
             ])
-            ->add('google_description', TextType::class, [
-                'attr' => [ 
-                    'maxlength' => '255'
-                ],
+            ->add('categorie', EntityType::class, [
+                'label' => 'Catégorie',
+                'attr' => [],
+                'placeholder' => '-- Choisir une catégorie --',
+                'class' => Categorie::class,
+                'choice_label' => function (Categorie $categorie) {
+                    return strtoupper($categorie->getTitle());
+                },
                 'constraints' => [
                     new NotBlank(),
-                    new Length([
-                        'max' => 255
-                    ])
                 ]
+ 
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter une catégorie',
+                'label' => 'Ajouter un service',
                 'attr' => [
                     'class' => 'btn-success'
                     ]
@@ -105,7 +100,7 @@ class CategorieType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categorie::class,
+            'data_class' => Services::class,
         ]);
     }
 }

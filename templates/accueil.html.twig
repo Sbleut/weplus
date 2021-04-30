@@ -17,17 +17,24 @@
 			<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
 		</section>
 
+		<section class="container d-flex justify-content-around flex-wrap">
 		{% for categorie in categories %}
-			<section>
-				<div class="card" style="width: 18rem;">
+			
+				<div class="card m-3" style="width: 18rem;">
 					<img class="card-img-top" src="{{asset('assets/img/img_catego/' ~ categorie.ImageCatego)}}" alt="Card image cap">
 					<div class="card-body">
-						<h2 class="card-title">{{categorie.title}}</h2>
+						<h2 class="card-title">{{categorie.title}}</h2> 
 						<p class="card-text">{{categorie.subTitle}}</p>
+						<p class="card-text">
+							<small class="text-muted"  ><a href="{{ path('services', {'id': categorie.id}) }}">{{categorie.title}}</a></small>
+						</p>
 					</div>
 				</div>
-			</section>
+			
 		{% endfor %}
+		</section>
 	</main>
+
+
 
 {% endblock %}

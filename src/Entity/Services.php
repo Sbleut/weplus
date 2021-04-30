@@ -28,7 +28,7 @@ class Services
     private $image_service;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $text;
 

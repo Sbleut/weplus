@@ -58,14 +58,14 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/accueil", name="accueil")
+     * 
      */
     public function retrieveAll(): Response
     {
         $repository = $this->getDoctrine()->getRepository(Categorie::class);
         $categories = $repository->findAll();
 
-        return $this->render('accueil.html.twig', [
+        return $this->render('/layout/_navbar.html.twig', [
             'categories' => $categories,
         ]);
     }

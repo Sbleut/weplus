@@ -30,7 +30,7 @@ class Categorie
     private $sub_title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -48,6 +48,11 @@ class Categorie
      * @ORM\OneToMany(targetEntity=Services::class, mappedBy="categorie")
      */
     private $serviceCat;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $google_description;
 
     public function __construct()
     {
@@ -145,6 +150,18 @@ class Categorie
                 $serviceCat->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGoogleDescription(): ?string
+    {
+        return $this->google_description;
+    }
+
+    public function setGoogleDescription(string $google_description): self
+    {
+        $this->google_description = $google_description;
 
         return $this;
     }

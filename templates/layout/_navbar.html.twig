@@ -1,0 +1,10 @@
+{% set route = app.request.get('_route') %}
+<nav class="navbar navbar-expand">
+	<a class="nav-link text-success" href="{{ path('accueil') }}">Accueil</a>
+	
+	{% for categorie in categories %}
+		<a class="nav-link text-success" href="{{ path('services', {'id': categorie.id}) }}">{{categorie.title}}</a>
+		{#<a class="nav-link" href="{{ path('gerer-profil') }}">Gérer project</a>#}
+	{% endfor %}
+
+</nav>
