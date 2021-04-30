@@ -1,41 +1,33 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>
-			{% block title %}{% endblock %}
-		</title>
-		{# Run `composer require symfony/webpack-encore-bundle`
-		           and uncomment the following Encore helpers to start using Symfony UX #}
-		{% block stylesheets %}
-			{#{{ encore_entry_link_tags('app') }}#}
-		{% endblock %}
+{% extends "layout/layout.html.twig" %}
 
-		{% block javascripts %}
-			{#{{ encore_entry_script_tags('app') }}#}
-		{% endblock %}
-	</head>
-	<body>
-		{% block body %}
-			<main>
-				<section>
-					<h1>Weplus Communiquer en vidéo</h1>
-					<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
-				</section>
+	{% block title %}{% endblock %}
 
-				{% for categorie in categories %}
-					<section>
-						<div class="card" style="width: 18rem;">
-							<img class="card-img-top" src="..." alt="Card image cap">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-								<a href="#" class="btn btn-primary">Go somewhere</a>
-							</div>
-						</div>
-					</section>
-				{% endfor %}
-			</main>
-		{% endblock %}
-	</body>
-</html>
+{% block stylesheets %}
+	
+{% endblock %}
+
+{% block javascripts %}
+	
+{% endblock %}
+
+{% block body %}
+	<main>
+		<section>
+			<h1>Weplus Communiquer en vidéo</h1>
+			<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
+		</section>
+
+		{% for categorie in categories %}
+			<section>
+				<div class="card" style="width: 18rem;">
+					<img class="card-img-top" src="{{asset('assets/img/img_catego/' ~ categorie.ImageCatego)}}" alt="Card image cap">
+					<div class="card-body">
+						<h2 class="card-title">{{categorie.title}}</h2>
+						<p class="card-text">{{categorie.subTitle}}</p>
+					</div>
+				</div>
+			</section>
+		{% endfor %}
+	</main>
+
+{% endblock %}

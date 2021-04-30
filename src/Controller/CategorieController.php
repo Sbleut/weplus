@@ -53,12 +53,12 @@ class CategorieController extends AbstractController
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirect('/accueil/' . $categorie->getId()); 
+            return $this->redirect('/accueil'); 
         }
     }
 
     /**
-     * @Route("/categorie", name="accueil")
+     * @Route("/accueil", name="accueil")
      */
     public function retrieveAll(): Response
     {
