@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\MatosCatego;
 use App\Entity\Services;
 use App\Form\ServiceType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,15 +65,22 @@ class ServicesController extends AbstractController
     public function retrieveServiceByCatego($id)
     {
         $repository = $this->getDoctrine()->getRepository(categorie::class);
-        $categories = $repository->find($id);
+        $categorie = $repository->find($id);
 
-        $services = $categories->getServiceCat();
+        $services = $categorie->getServiceCat();
+        $matosCategos =  null;
 
-        if (empty($categories)) throw new NotFoundHttpException();
+        if (empty($categorie)) throw new NotFoundHttpException();
+
+        if($categorie->getId() == 5) {
+            $repository = $this->getDoctrine()->getRepository(MatosCatego::class);
+            $matosCategos = $repository->findAll();
+        }        
 
         return $this->render('services.html.twig', [
+            'matosCategos' => $matosCategos,
             'services' => $services,
-            'categories' => $categories
+            'categorie' => $categorie
         ]);
     }
 }
