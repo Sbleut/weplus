@@ -71,6 +71,20 @@ class CategorieController extends AbstractController
     }
 
     /**
+     * @Route("/admin/gerer/categorie", name="gerer-categorie")
+     * 
+     * 
+     */
+    public function gererCategorie(): Response {
+        $repository = $this->getDoctrine()->getRepository(Categorie::class);
+        $categories = $repository->findAll();
+
+        return $this->render('admin/gerer-categorie.html.twig', [
+            'categories' => $categories
+        ]);
+    }
+
+    /**
      * @Route("/admin/update/categorie/{id}", name="update-categorie")
      * 
      * 
@@ -119,5 +133,24 @@ class CategorieController extends AbstractController
 
             return $this->redirect('/categorie/' . $categorie->getId());
         }
+    }
+
+    
+
+    /**
+     * @Route("admin/supprimer/matos/categorie/{id}", name="delete-categorie")
+     */
+    public function supprimerCategorie($id): Response {
+
+        $repo = $this->getDoctrine()->getRepository(Matos::class);
+        $categorie = $repo->find($id);
+
+        if (empty($categorie)) throw new NotFoundHttpException();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorie);
+        $em->flush();
+
+        return $this->redirectToRoute('gerer_categorie');
     }
 }

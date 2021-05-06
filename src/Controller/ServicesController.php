@@ -83,4 +83,79 @@ class ServicesController extends AbstractController
             'categorie' => $categorie
         ]);
     }
+
+    /**
+     * @Route("/admin/gerer/service", name="gerer-services")
+     * 
+     * 
+     */
+    public function gererService(): Response {
+        $repository = $this->getDoctrine()->getRepository(Services::class);
+        $services = $repository->findAll();
+
+        return $this->render('admin/gerer-services.html.twig', [
+            'services' => $services
+        ]);
+    }
+
+    /**
+     * @Route("admin/modifier/service/{id}", name="update-service")
+     */
+    public function modifierService($id, Request $r): Response {
+
+        $repo = $this->getDoctrine()->getRepository(Services::class);
+        $service = $repo->find($id);
+
+        $oldImage = $service->getImageService();
+
+        if (empty($service)) throw new NotFoundHttpException();
+
+        $form = $this->createForm(ServiceType::class, $service);
+
+        $form->handleRequest($r);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->render('admin/update-services.html.twig', [
+                'form' => $form->createView(),
+                'oldImage' => $oldImage,
+                'id' => $service->getId()
+            ]);
+        } else {
+
+            // Je vais déplacer le fichier uploadé
+            $image = $form->get('image')->getData();
+
+            try {
+                $image->move($this->getParameter('service_image_directory'), $oldImage);
+            } catch (FileException $ex) {
+                $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
+                throw new Exception('File upload error');
+            }
+
+            $service->setServiceImage($oldImage);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($service);
+            $em->flush();
+
+            return $this->redirect('/service/' . $service->getId());
+        }
+    }
+
+    /**
+     * @Route("admin/supprimer/service/{id}", name="delete-service")
+     */
+    public function supprimerservice($id): Response {
+
+        $repo = $this->getDoctrine()->getRepository(service::class);
+        $service = $repo->find($id);
+
+        if (empty($service)) throw new NotFoundHttpException();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($service);
+        $em->flush();
+
+        return $this->redirectToRoute('gerer_matos');
+    }
 }

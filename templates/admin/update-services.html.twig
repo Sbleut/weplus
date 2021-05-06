@@ -9,7 +9,9 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
+		<img src="{{asset('assets/img/img_service/' ~ oldImage)}}" alt="">
+		{{ form( form, {'action': path('update-service', {'id': id}) }) }}
+		</div>
 		
 
 

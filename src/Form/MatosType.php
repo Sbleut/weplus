@@ -122,9 +122,6 @@ class MatosType extends AbstractType
                     }
                     die;
                 },
-                'choice_value' => function (?Matos $matos) {
-                    return $matos ? $matos->getId() : ''; 
-                } ,
                 'multiple' => true,
                 'constraints' => [
                     new NotBlank(),

@@ -47,6 +47,16 @@ class MatosController extends AbstractController
                 throw new Exception('File upload error');
             }
 
+            $options = [];
+
+            $accessoires = $form->get('accessoires')->getData();
+
+            foreach($accessoires as $accessoire){
+
+            $options[] = $accessoire->getId();
+            }
+            
+            $matos->setAccessoires($options);
             $matos->setMatosImage($fileName);
 
             $em = $this->getDoctrine()->getManager();
@@ -54,6 +64,7 @@ class MatosController extends AbstractController
             $em->flush();
 
             return $this->redirect('/accueil'); 
+
         }
     }
 
@@ -65,11 +76,75 @@ class MatosController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Matos::class);
         $mato = $repo->find($id);
 
+        $accessoires = $mato->getAccessoires();
+        
         if (!empty($mato)) {
             return $this->render('matos.html.twig', [
-                'mato' => $mato
+                'mato' => $mato,
+                'accessoires' => $accessoires,
             ]);
         }
+    }
+
+    /**
+     * @Route("admin/modifier/matos/{id}", name="modifier-matos")
+     */
+    public function modifierMatos($id, Request $r): Response {
+
+        $repo = $this->getDoctrine()->getRepository(Matos::class);
+        $matos = $repo->find($id);
+
+        $oldImage = $matos->getMatosImage();
+
+        if (empty($matos)) throw new NotFoundHttpException();
+
+        $form = $this->createForm(matosType::class, $matos);
+
+        $form->handleRequest($r);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->render('matos/modifier-matos.html.twig', [
+                'form' => $form->createView(),
+                'oldImage' => $oldImage,
+                'id' => $matos->getId()
+            ]);
+        } else {
+
+            // Je vais déplacer le fichier uploadé
+            $image = $form->get('image')->getData();
+
+            try {
+                $image->move($this->getParameter('matos_image_directory'), $oldImage);
+            } catch (FileException $ex) {
+                $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
+                throw new Exception('File upload error');
+            }
+
+            $matos->setImage($oldImage);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($matos);
+            $em->flush();
+
+            return $this->redirect('/matos/' . $matos->getId());
+        }
+    }
+
+    /**
+     * @Route("admin/supprimer/matos/{id}", name="supprimer-matos")
+     */
+    public function supprimerMatos($id): Response {
+
+        $repo = $this->getDoctrine()->getRepository(Matos::class);
+        $matos = $repo->find($id);
+
+        if (empty($matos)) throw new NotFoundHttpException();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($matos);
+        $em->flush();
+
+        return $this->redirectToRoute('gerer_matoss');
     }
 
 }

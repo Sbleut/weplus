@@ -13,18 +13,35 @@
 			<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
 		</section>
 
-			<section class="container">
-					<div class="card mb-3">
-						<img class="card-img-top" src="{{asset('assets/img/img_matos/' ~ mato.matosImage)}}" alt="{{mato.MatosImageAlt}}">
-						<div class="card-body">
-							<h2 class="card-title">{{mato.nameMatos}}</h2>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<p class="card-text">
-								<small class="text-muted"><a href="{{ path('matos', {'id': mato.id}) }}">{{mato.nameMatos}}</a></small>
-							</p>
-						</div>
-					</div>
-			</section>
+		<section class="container">
+			<div class="card mb-3">
+				<img class="card-img-top" src="{{asset('assets/img/img_matos/' ~ mato.matosImage)}}" alt="{{mato.MatosImageAlt}}">
+				<div class="card-body">
+					<h2 class="card-title">{{mato.nameMatos}}</h2>
+					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<p class="card-text">
+						<small class="text-muted">
+							<a href="{{ path('matos', {'id': mato.id}) }}">{{mato.nameMatos}}</a>
+						</small>
+						<button>
+							<a href="{{path("panier-ajout", {id: mato.id})}}">Ajouter au panier</a>
+						</button>
+					</p>
+				</div>
+				<div class="card-body">
+					<ul class="list-group list-group-flush">
+						{% for accessoire in accessoires %}
+						<li class=" list-group-item">
+							<button class="btn btn-success" type="button">
+							<h3>{{accessoire.nameMatos}}</h3>
+							<img class="card-img" style="width:auto; height:150px;" src="{{asset('assets/img/img_matos/' ~ accessoire.matosImage)}}" alt="{{mato.MatosImageAlt}}">
+							</button>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</section>
 
 	</main>
 

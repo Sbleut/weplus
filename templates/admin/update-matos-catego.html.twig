@@ -9,7 +9,9 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
+		<img src="{{asset('assets/img/img_matos_catego/' ~ oldImage)}}" alt="">
+		{{ form( form, {'action': path('modifier-matos-catego', {'id': id}) }) }}
+		</div>
 		
 
 

@@ -9,8 +9,8 @@
 {% block body %}
 	<main>
 		<section>
-			<h1>Weplus Communiquer en vidéo</h1>
-			<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
+			<h1>{{categorie.title}}</h1>
+			<p>{{categorie.description}}</p>
 		</section>
 
 		{% if categorie.id != 5 %}
@@ -37,17 +37,20 @@
 			<section class="container">
 
 				{% for matosCatego in matosCategos %}
-					<div class="card mb-3">
-						<img class="card-img-top" src="{{asset('assets/img/img_matos_catego/' ~ matosCatego.matosCategoImage)}}" alt="{{matosCatego.matosCategoImageAlt}}">
-						<div class="card-body">
-							<h2 class="card-title">{{matosCatego.name}}</h2>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<p class="card-text">
-								<small class="text-muted"><a href="{{ path('matos-categorie', {'id': matosCatego.id}) }}">{{matosCatego.name}}</a></small>
-							</p>
+					{% if matosCatego.name != 'Accessoires'%}
+						<div class="card mb-3">
+							<img class="card-img-top" src="{{asset('assets/img/img_matos_catego/' ~ matosCatego.matosCategoImage)}}" alt="{{matosCatego.matosCategoImageAlt}}">
+							<div class="card-body">
+								<h2 class="card-title">{{matosCatego.name}}</h2>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<p class="card-text">
+									<small class="text-muted">
+										<a href="{{ path('matos-categorie', {'id': matosCatego.id}) }}">{{matosCatego.name}}</a>
+									</small>
+								</p>
+							</div>
 						</div>
-					</div>
-
+					{% endif %}
 				{% endfor %}
 
 			</section>
