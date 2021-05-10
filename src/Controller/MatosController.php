@@ -76,8 +76,12 @@ class MatosController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Matos::class);
         $mato = $repo->find($id);
 
-        $accessoires = $mato->getAccessoires();
-        
+        $accessoires_id = $mato->getAccessoires();
+        $accessoires = [];
+
+        foreach($accessoires_id as $accessoire_id){
+        $accessoires[] = $repo->find($accessoire_id);
+        }
         if (!empty($mato)) {
             return $this->render('matos.html.twig', [
                 'mato' => $mato,

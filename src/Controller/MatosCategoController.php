@@ -108,7 +108,7 @@ class MatosCategoController extends AbstractController
         $form->handleRequest($r);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->render('matos/update-matos-catego.html.twig', [
+            return $this->render('admin/update-matos-catego.html.twig', [
                 'form' => $form->createView(),
                 'oldImage' => $oldImage,
                 'id' => $matosCatego->getId()

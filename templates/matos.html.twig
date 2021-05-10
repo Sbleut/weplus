@@ -28,17 +28,16 @@
 						</button>
 					</p>
 				</div>
-				<div class="card-body">
-					<ul class="list-group list-group-flush">
-						{% for accessoire in accessoires %}
-						<li class=" list-group-item">
+				<div class="container">					
+						{% for a in accessoires %}
+						
 							<button class="btn btn-success" type="button">
-							<h3>{{accessoire.nameMatos}}</h3>
-							<img class="card-img" style="width:auto; height:150px;" src="{{asset('assets/img/img_matos/' ~ accessoire.matosImage)}}" alt="{{mato.MatosImageAlt}}">
+							<h3>{{a.nameMatos}}</h3>
+							<img class="card-img" style="width:auto; height:150px;" src="{{asset('assets/img/img_matos/' ~ a.matosImage)}}" alt="{{mato.MatosImageAlt}}">
 							</button>
-						</li>
+						
 						{% endfor %}
-					</ul>
+					
 				</div>
 			</div>
 		</section>

@@ -22,7 +22,7 @@
 						<img class="card-img-top" src="{{asset('assets/img/img_service/' ~ service.ImageService)}}" alt="Card image cap">
 						<div class="card-body">
 							<h2 class="card-title">{{service.name}}</h2>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+							<p class="card-text">{{service.text}}</p>
 							<p class="card-text">
 								<small class="text-muted">Last updated 3 mins ago</small>
 							</p>
@@ -42,7 +42,7 @@
 							<img class="card-img-top" src="{{asset('assets/img/img_matos_catego/' ~ matosCatego.matosCategoImage)}}" alt="{{matosCatego.matosCategoImageAlt}}">
 							<div class="card-body">
 								<h2 class="card-title">{{matosCatego.name}}</h2>
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								
 								<p class="card-text">
 									<small class="text-muted">
 										<a href="{{ path('matos-categorie', {'id': matosCatego.id}) }}">{{matosCatego.name}}</a>
