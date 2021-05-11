@@ -1,0 +1,84 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}Tout notre équipement
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div style="container">
+
+		<a href="{{ path('create-matos') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer un matos</a>
+
+		<table id="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>nom</th>
+					<th>Stock</th>					
+					<th>prix_ht</th>
+                    <th>caution</th>
+                    <th>Catégorie de matériel</th>
+                    <th>image</th>
+                    <th>image_alt</th>
+                    <th>accessoires</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in matos %}
+					<tr>
+						<td>{{ a.id }}</td>
+						<td>
+							<a href="{{ path('update-matos', {'id': a.id}) }}" title="Modifier cet matos">{{ a.nameMatos }}</a>
+						</td>
+						<td><img src="{{ asset('/assets/img/img_matos/' ~ a.matosImage) }}" style="width:50px;height:50px;"/></td>
+						<td>{{a.Stock}}</td>
+                        <td>{{a.prix_ht}}</td>
+                        <td>{{a.caution}}</td>
+                        <td>{{a.matosCatego}}</td>
+                        <td>{{a.matosImage}}</td>
+                        <td>{{a.matosImagealt}}</td>
+                        <td> {% for a in accessoires %}
+                            {{a.nameMatos}}
+                            {% endfor %}
+                        </td>
+
+						<td>
+							<a href="{{ path( 'delete-matos', {'id': a.id} ) }}" title="Supprimer ce matos" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+								<i class="fas fa-trash"></i>
+							</a>
+							<a href="{{ path('update-matos', {'id': a.id}) }}" title="Modifier ce matos" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('matos', {'id': a.id}) }}" title="Voir ce matos" class="btn btn-info" target="_blank">
+								<i class="fas fa-eye"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>Il n'y a aucun matos à afficher.</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('create-matos') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer un matos</a>
+
+	</div>
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#table').DataTable();
+});
+	</script>
+{% endblock %}

@@ -51,11 +51,11 @@ class MatosController extends AbstractController
 
             $accessoires = $form->get('accessoires')->getData();
 
-            foreach($accessoires as $accessoire){
+            foreach ($accessoires as $accessoire) {
 
-            $options[] = $accessoire->getId();
+                $options[] = $accessoire->getId();
             }
-            
+
             $matos->setAccessoires($options);
             $matos->setMatosImage($fileName);
 
@@ -63,8 +63,7 @@ class MatosController extends AbstractController
             $em->persist($matos);
             $em->flush();
 
-            return $this->redirect('/accueil'); 
-
+            return $this->redirect('/accueil');
         }
     }
 
@@ -72,15 +71,17 @@ class MatosController extends AbstractController
      * @Route("/matos/{id}", name="matos")
      */
     public function retrieveMatos($id): Response
-    {      
+    {
         $repo = $this->getDoctrine()->getRepository(Matos::class);
         $mato = $repo->find($id);
 
         $accessoires_id = $mato->getAccessoires();
         $accessoires = [];
 
-        foreach($accessoires_id as $accessoire_id){
-        $accessoires[] = $repo->find($accessoire_id);
+        if (!empty($accessoires_id)) {
+            foreach ($accessoires_id as $accessoire_id) {
+                $accessoires[] = $repo->find($accessoire_id);
+            }
         }
         if (!empty($mato)) {
             return $this->render('matos.html.twig', [
@@ -91,9 +92,24 @@ class MatosController extends AbstractController
     }
 
     /**
+     * @Route("/admin/gerer/matos", name="gerer-matos")
+     * 
+     * 
+     */
+    public function gererMatos(): Response {
+        $repository = $this->getDoctrine()->getRepository(Matos::class);
+        $matos = $repository->findAll();
+
+        return $this->render('admin/gerer-matos.html.twig', [
+            'matos' => $matos
+        ]);
+    }
+
+    /**
      * @Route("admin/modifier/matos/{id}", name="modifier-matos")
      */
-    public function modifierMatos($id, Request $r): Response {
+    public function modifierMatos($id, Request $r): Response
+    {
 
         $repo = $this->getDoctrine()->getRepository(Matos::class);
         $matos = $repo->find($id);
@@ -137,7 +153,8 @@ class MatosController extends AbstractController
     /**
      * @Route("admin/supprimer/matos/{id}", name="supprimer-matos")
      */
-    public function supprimerMatos($id): Response {
+    public function supprimerMatos($id): Response
+    {
 
         $repo = $this->getDoctrine()->getRepository(Matos::class);
         $matos = $repo->find($id);
@@ -150,5 +167,4 @@ class MatosController extends AbstractController
 
         return $this->redirectToRoute('gerer_matoss');
     }
-
 }

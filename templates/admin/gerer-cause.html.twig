@@ -1,0 +1,77 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}Toutes nos causes
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div style="container">
+
+		<a href="{{ path('create-cause') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer une cause</a>
+
+		<table id="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>nom cause</th>
+					<th>text cause</th>
+					<th>citation</th>
+					<th>lien vidéo</th>
+					<th>image_cause</th>
+					<th>image_cause_alt</th>
+					<th>Cause_google_description</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in causes %}
+					<tr>
+						<td>{{ a.id }}</td>
+						<td>
+							<a href="{{ path('modifier-cause', {'id': a.id}) }}" title="Modifier cet cause">{{ a.nomCause }}</a>
+						</td>
+						<td><img src="{{ asset('/assets/img/img_cause/' ~ a.ImageCause) }}" style="width:50px;height:50px;"/></td>
+						<td>{{a.textCause}}</td>
+                        <td>{{a.citation}}</td>
+                        <td>{{a.lienVideo}}</td>
+                        <td>{{a.imageCauseAlt}}</td>
+                        <td>{{a.causeGoogleDescription}}</td>
+						<td>
+							<a href="{{ path( 'supprimer-cause', {'id': a.id} ) }}" title="Supprimer cette cause" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+								<i class="fas fa-trash"></i>
+							</a>
+							<a href="{{ path('modifier-cause', {'id': a.id}) }}" title="Modifier cette cause" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('cause', {'id': a.id}) }}" title="Voir cette cause" class="btn btn-info" target="_blank">
+								<i class="fas fa-eye"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>Il n'y a aucune cause à afficher.</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('create-cause') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer un cause</a>
+
+	</div>
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#table').DataTable();
+});
+	</script>
+{% endblock %}

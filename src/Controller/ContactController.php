@@ -27,6 +27,25 @@ class ContactController extends AbstractController
     }
     
 
+    public function mailSender($objet, $data, MailerInterface $mailer, $destinataire) {
+        $text = 'Quelqu\'un vous a envoyé une demande de contact sur votre site. Cette personne s\'appelle ' . $data['nom'] . '.' . PHP_EOL . PHP_EOL
+                . 'Voici son message : ' . PHP_EOL . PHP_EOL
+                . $data['message'] . PHP_EOL . PHP_EOL
+                . 'Si vous voulez lui répondre, veuillez écrire à l\'adresse : ' . $data['email'];
+
+
+            $email = new MimeEmail();
+            $email->from(Address::create('<thomas@weplus.fr>'))
+                ->to($destinataire)
+                ->replyTo($data['email'])
+                ->subject($objet)
+                ->html("<html><body>$text")
+                ->text($text);
+
+            $mailer->send($email);
+
+    }
+
     /**
      * @Route("/handleContact", name="handlecontact") 
      * 
@@ -43,6 +62,31 @@ class ContactController extends AbstractController
         } else {      
 
         $data = $form->getData();
+
+        dd($data['objet']->getTitle());
+
+        switch ($data['objet']->getId()) {
+            case 1 :
+                //Service Audiovisuel Mailing Distribution
+                break;
+            case 2 : 
+                //SErvice Photographie Mailing Distribution
+                break;
+            case 3 : 
+                // SErvice Digital Mailing distribution
+                break;
+            case 4 :
+                // Service Formation Mailing distribution
+                break;
+            case 5 :
+                // Service Location de matériel Mailing distribution
+                break;
+            default:
+                
+        }
+
+
+        
 
         $text = 'Quelqu\'un vous a envoyé une demande de contact sur votre site. Cette personne s\'appelle ' . $data['nom'] . '.' . PHP_EOL . PHP_EOL
                 . 'Voici son message : ' . PHP_EOL . PHP_EOL

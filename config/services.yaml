@@ -8,6 +8,9 @@ parameters:
     service_image_directory: '%kernel.project_dir%/public/assets/img/img_service'
     matos_categorie_image_directory: '%kernel.project_dir%/public/assets/img/img_matos_catego'
     matos_image_directory: '%kernel.project_dir%/public/assets/img/img_matos'
+    cause_image_directory: '%kernel.project_dir%/public/assets/img/img_cause'
+    asso_image_directory: '%kernel.project_dir%/public/assets/img/img_assos'
+    entreprise_logo_directory: '%kernel.project_dir%/public/assets/img/logo_entreprise'
 
 services:
     # default configuration for services in *this* file

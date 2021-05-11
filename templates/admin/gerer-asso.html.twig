@@ -1,0 +1,76 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}Toutes les assos partenaires
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div style="container">
+
+		<a href="{{ path('create-asso') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer une asso</a>
+
+		<table id="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>nameAsso</th>
+					<th>lienAsso</th>					
+					<th>resoAsso</th>
+                    <th>textAsso</th>
+                    <th>assoImage</th>
+                    <th>AssoImageAlt</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in asso %}
+					<tr>
+						<td>{{ a.id }}</td>
+						<td>
+							<a href="{{ path('modifier-asso', {'id': a.id}) }}" title="Modifier cet asso">{{ a.nameAsso }}</a>
+						</td>
+						<td><img src="{{ asset('/assets/img/img_asso/' ~ a.assoImage) }}" style="width:50px;height:50px;"/></td>
+						<td>{{a.lienAsso}}</td>
+                        <td>{{a.resoAsso}}</td>
+                        <td>{{a.textAsso}}</td>
+                        <td>{{a.assoImagealt}}</td>
+
+						<td>
+							<a href="{{ path( 'supprimer-asso', {'id': a.id} ) }}" title="Supprimer ce asso" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+								<i class="fas fa-trash"></i>
+							</a>
+							<a href="{{ path('modifier-asso', {'id': a.id}) }}" title="Modifier ce asso" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('asso', {'id': a.id}) }}" title="Voir ce asso" class="btn btn-info" target="_blank">
+								<i class="fas fa-eye"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>Il n'y a aucun asso à afficher.</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('create-asso') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer un asso</a>
+
+	</div>
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#table').DataTable();
+});
+	</script>
+{% endblock %}
