@@ -39,6 +39,11 @@ class Entreprises
      */
     private $causes;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logoAlt;
+
     public function __construct()
     {
         $this->causes = new ArrayCollection();
@@ -105,6 +110,18 @@ class Entreprises
     public function removeCause(Causes $cause): self
     {
         $this->causes->removeElement($cause);
+
+        return $this;
+    }
+
+    public function getLogoAlt(): ?string
+    {
+        return $this->logoAlt;
+    }
+
+    public function setLogoAlt(string $logoAlt): self
+    {
+        $this->logoAlt = $logoAlt;
 
         return $this;
     }

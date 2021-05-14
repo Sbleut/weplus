@@ -92,8 +92,6 @@ class CauseType extends AbstractType
                     ])
                 ]
             ])
-            ->add('associations')
-            ->add('entreprises')
             ->add('cause_google_description')
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter une catégorie',

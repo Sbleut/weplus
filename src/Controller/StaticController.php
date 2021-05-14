@@ -21,4 +21,12 @@ class StaticController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+    /**
+     * @Route("/devis", name="devis")
+     */
+    public function Devis(): Response
+    {
+        return $this->render('devis.html.twig');
+    }
 }

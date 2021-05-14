@@ -74,10 +74,10 @@ class EntrepriseController extends AbstractController
      */
     public function gererEntreprises(): Response {
         $repository = $this->getDoctrine()->getRepository(Entreprises::class);
-        $entreprise = $repository->findAll();
+        $entreprises = $repository->findAll();
 
-        return $this->render('admin/gerer-entreprise.html.twig', [
-            'asso' => $entreprise
+        return $this->render('admin/gerer-entreprises.html.twig', [
+            'entreprises' => $entreprises
         ]);
     }
 
@@ -91,16 +91,16 @@ class EntrepriseController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Entreprises::class);
         $entreprise = $repo->find($id);
 
-        $oldImage = $entreprise->getMatosImage();
+        $oldImage = $entreprise->getLogo();
 
-        if (empty($matos)) throw new NotFoundHttpException();
+        if (empty($entreprise)) throw new NotFoundHttpException();
 
         $form = $this->createForm(EntrepriseType::class, $entreprise);
 
         $form->handleRequest($r);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->render('admin/modifier-entreprise.html.twig', [
+            return $this->render('admin/update-entreprise.html.twig', [
                 'form' => $form->createView(),
                 'oldImage' => $oldImage,
                 'id' => $entreprise->getId()
@@ -108,7 +108,7 @@ class EntrepriseController extends AbstractController
         } else {
 
             // Je vais déplacer le fichier uploadé
-            $image = $form->get('image')->getData();
+            $image = $form->get('logo')->getData();
 
             try {
                 $image->move($this->getParameter('entreprise_logo_directory'), $oldImage);
@@ -117,7 +117,7 @@ class EntrepriseController extends AbstractController
                 throw new Exception('File upload error');
             }
 
-            $matos->setAssoImage($oldImage);
+            $entreprise->setLogo($oldImage);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($entreprise);

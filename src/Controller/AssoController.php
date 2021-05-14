@@ -58,9 +58,9 @@ class AssoController extends AbstractController
                 $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
                 throw new Exception('File upload error');
             }
-
-            $asso->setAssoImage($fileName);
             
+            $asso->setAssoImage($fileName);
+
             /*
 
             $causes = $form->get('causes')->getData();

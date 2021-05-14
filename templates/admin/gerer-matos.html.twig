@@ -20,11 +20,11 @@
 				<tr>
 					<th>ID</th>
 					<th>nom</th>
+					<th>image</th>
 					<th>Stock</th>					
 					<th>prix_ht</th>
                     <th>caution</th>
-                    <th>Catégorie de matériel</th>
-                    <th>image</th>
+                    <th>Catégorie de matériel</th>                    
                     <th>image_alt</th>
                     <th>accessoires</th>
 				</tr>
@@ -34,25 +34,27 @@
 					<tr>
 						<td>{{ a.id }}</td>
 						<td>
-							<a href="{{ path('update-matos', {'id': a.id}) }}" title="Modifier cet matos">{{ a.nameMatos }}</a>
+							<a href="{{ path('modifier-matos', {'id': a.id}) }}" title="Modifier cet matos">{{ a.nameMatos }}</a>
 						</td>
 						<td><img src="{{ asset('/assets/img/img_matos/' ~ a.matosImage) }}" style="width:50px;height:50px;"/></td>
 						<td>{{a.Stock}}</td>
-                        <td>{{a.prix_ht}}</td>
+                        <td>{{a.prixHt}}</td>
                         <td>{{a.caution}}</td>
-                        <td>{{a.matosCatego}}</td>
-                        <td>{{a.matosImage}}</td>
+                        <td>{{a.matosCatego.name}}</td>
                         <td>{{a.matosImagealt}}</td>
-                        <td> {% for a in accessoires %}
-                            {{a.nameMatos}}
-                            {% endfor %}
+                        <td>
+						{% for b in a.accessoires %}
+							{% if b != null %}
+                            {{b.name}}
+							{% endif %}
+                        {% endfor %}
                         </td>
 
 						<td>
-							<a href="{{ path( 'delete-matos', {'id': a.id} ) }}" title="Supprimer ce matos" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+							<a href="{{ path( 'supprimer-matos', {'id': a.id} ) }}" title="Supprimer ce matos" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
 								<i class="fas fa-trash"></i>
 							</a>
-							<a href="{{ path('update-matos', {'id': a.id}) }}" title="Modifier ce matos" class="btn btn-primary">
+							<a href="{{ path('modifier-matos', {'id': a.id}) }}" title="Modifier ce matos" class="btn btn-primary">
 								<i class="fas fa-edit"></i>
 							</a>
 							<a href="{{ path('matos', {'id': a.id}) }}" title="Voir ce matos" class="btn btn-info" target="_blank">

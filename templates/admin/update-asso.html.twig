@@ -1,0 +1,21 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Create Catego
+{% endblock %}
+
+{% block body %}
+
+	<h1>Admin</h1>
+
+	{{ form_start(form) }}
+	<div class="container">
+		<img src="{{asset('assets/img/img_asso/' ~ oldImage)}}" alt="">
+		{{ form( form, {'action': path('modifier-asso', {'id': id}) }) }}
+		</div>
+		
+
+
+	</div>
+	{{ form_end(form) }}
+    
+{% endblock %}

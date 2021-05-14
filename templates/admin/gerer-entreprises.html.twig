@@ -12,8 +12,8 @@
 {% block body %}
 	<div style="container">
 
-		<a href="{{ path('create-matos') }}" class="btn btn-success">
-			<i class="fas fa-plus mr-4"></i>Créer un matos</a>
+		<a href="{{ path('create-entreprise') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer une entreprise</a>
 
 		<table id="table">
 			<thead>
@@ -29,16 +29,16 @@
 					<tr>
 						<td>{{ a.id }}</td>
 						<td>
-							<a href="{{ path('update-entreprise', {'id': a.id}) }}" title="Modifier cette entreprise">{{ a.nameEntreprise }}</a>
+							<a href="{{ path('modifier-entreprise', {'id': a.id}) }}" title="Modifier cette entreprise">{{ a.nameEntreprise }}</a>
 						</td>
 						<td><img src="{{ asset('/assets/img/logo_entreprise/' ~ a.logo) }}" style="width:50px;height:50px;"/></td>
-						<td>{{a.lienEntreprises}}</td>
+						<td>{{a.lienEntreprise}}</td>
 
 						<td>
-							<a href="{{ path( 'delete-entreprise', {'id': a.id} ) }}" title="Supprimer cette entreprise" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+							<a href="{{ path( 'supprimer-entreprise', {'id': a.id} ) }}" title="Supprimer cette entreprise" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
 								<i class="fas fa-trash"></i>
 							</a>
-							<a href="{{ path('update-entreprise', {'id': a.id}) }}" title="Modifier cette entreprise" class="btn btn-primary">
+							<a href="{{ path('modifier-entreprise', {'id': a.id}) }}" title="Modifier cette entreprise" class="btn btn-primary">
 								<i class="fas fa-edit"></i>
 							</a>
 							<a href="{{ path('entreprise', {'id': a.id}) }}" title="Voir cette entreprise" class="btn btn-info" target="_blank">

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Matos;
 use App\Form\MatosType;
+use Doctrine\ORM\EntityRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -83,6 +84,8 @@ class MatosController extends AbstractController
                 $accessoires[] = $repo->find($accessoire_id);
             }
         }
+        
+        
         if (!empty($mato)) {
             return $this->render('matos.html.twig', [
                 'mato' => $mato,
@@ -96,12 +99,33 @@ class MatosController extends AbstractController
      * 
      * 
      */
-    public function gererMatos(): Response {
+    public function gererMatos(): Response
+    {
         $repository = $this->getDoctrine()->getRepository(Matos::class);
         $matos = $repository->findAll();
 
+        foreach ($matos as $mato) {
+            $accessoires = $mato->getAccessoires();
+            if (!empty($accessoires)) {
+                
+                foreach ($accessoires as $accessoire) {
+                    $accessoires = $repository->find($accessoire);
+
+                    $accessoiresNames[] = ['name' => $accessoires->getNameMatos()] ;
+                }
+            }
+            else{
+                $accessoiresNames[] = null;
+            }
+            $mato->setAccessoires($accessoiresNames);
+            $accessoiresNames = null;
+            
+        }
+
+        
+
         return $this->render('admin/gerer-matos.html.twig', [
-            'matos' => $matos
+            'matos' => $matos,
         ]);
     }
 

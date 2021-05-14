@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
+use App\Repository\MatosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email as MimeEmail;
 use Symfony\Component\Mime\Address;
@@ -18,39 +20,39 @@ class ContactController extends AbstractController
      */
     public function contact(): Response
     {
-        $form = $this->createForm(ContactType::class);     
+        $form = $this->createForm(ContactType::class);
 
-            // J'affiche la vue du formulaire
-            return $this->render('/layout/_contact.html.twig', [
-                'form' => $form->createView(),
-            ]);        
+        // J'affiche la vue du formulaire
+        return $this->render('/layout/_contact.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
-    
 
-    public function mailSender($objet, $data, MailerInterface $mailer, $destinataire) {
+
+    public function mailSender($objet, $data, MailerInterface $mailer, $destinataire)
+    {
         $text = 'Quelqu\'un vous a envoyé une demande de contact sur votre site. Cette personne s\'appelle ' . $data['nom'] . '.' . PHP_EOL . PHP_EOL
-                . 'Voici son message : ' . PHP_EOL . PHP_EOL
-                . $data['message'] . PHP_EOL . PHP_EOL
-                . 'Si vous voulez lui répondre, veuillez écrire à l\'adresse : ' . $data['email'];
+            . 'Voici son message : ' . PHP_EOL . PHP_EOL
+            . $data['message'] . PHP_EOL . PHP_EOL
+            . 'Si vous voulez lui répondre, veuillez écrire à l\'adresse : ' . $data['email'];
 
 
-            $email = new MimeEmail();
-            $email->from(Address::create('<thomas@weplus.fr>'))
-                ->to($destinataire)
-                ->replyTo($data['email'])
-                ->subject($objet)
-                ->html("<html><body>$text")
-                ->text($text);
+        $email = new MimeEmail();
+        $email->from(Address::create('<thomas@weplus.fr>'))
+            ->to($destinataire)
+            ->replyTo($data['email'])
+            ->subject($objet)
+            ->html("<html><body>$text")
+            ->text($text);
 
-            $mailer->send($email);
-
+        $mailer->send($email);
     }
 
     /**
      * @Route("/handleContact", name="handlecontact") 
      * 
      */
-    public function handleContact(Request $r, MailerInterface $mailer)
+    public function handleContact(Request $r, MailerInterface $mailer, SessionInterface $session, MatosRepository $matosRepository)
     {
         $form = $this->createForm(ContactType::class);
 
@@ -59,36 +61,50 @@ class ContactController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
 
             return $this->redirect('/accueil');
-        } else {      
+        } else {
 
-        $data = $form->getData();
+            $data = $form->getData();
 
-        dd($data['objet']->getTitle());
+            dd($r);
 
-        switch ($data['objet']->getId()) {
-            case 1 :
-                //Service Audiovisuel Mailing Distribution
-                break;
-            case 2 : 
-                //SErvice Photographie Mailing Distribution
-                break;
-            case 3 : 
-                // SErvice Digital Mailing distribution
-                break;
-            case 4 :
-                // Service Formation Mailing distribution
-                break;
-            case 5 :
-                // Service Location de matériel Mailing distribution
-                break;
-            default:
-                
-        }
+            switch ($data['objet']->getId()) {
+                case 1:
+                    //Service Audiovisuel Mailing Distribution
+                    break;
+                case 2:
+                    //SErvice Photographie Mailing Distribution
+                    break;
+                case 3:
+                    // SErvice Digital Mailing distribution
+                    break;
+                case 4:
+                    // Service Formation Mailing distribution
+                    break;
+                case 5:
+                    // Service Location de matériel Mailing distribution
+                    $panier = $session->get("panier", []);
+
+                    // On "fabrique" les données
+                    $dataPanier = [];
+                    $total = 0;
+
+                    foreach ($panier as $id => $quantite) {
+                        $matos = $matosRepository->find($id);
+                        $dataPanier[] = [
+                            "matos" => $matos,
+                            "quantite" => $quantite
+                        ];
+                        $total += $matos->getPrixHt() * $quantite;
+                    }
+
+                    break;
+                default:
+            }
 
 
-        
 
-        $text = 'Quelqu\'un vous a envoyé une demande de contact sur votre site. Cette personne s\'appelle ' . $data['nom'] . '.' . PHP_EOL . PHP_EOL
+
+            $text = 'Quelqu\'un vous a envoyé une demande de contact sur votre site. Cette personne s\'appelle ' . $data['nom'] . '.' . PHP_EOL . PHP_EOL
                 . 'Voici son message : ' . PHP_EOL . PHP_EOL
                 . $data['message'] . PHP_EOL . PHP_EOL
                 . 'Si vous voulez lui répondre, veuillez écrire à l\'adresse : ' . $data['email'];
@@ -106,6 +122,5 @@ class ContactController extends AbstractController
 
             return $this->redirectToRoute('accueil');
         }
-
     }
 }

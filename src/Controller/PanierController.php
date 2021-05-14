@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Matos;
 use App\Repository\MatosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class PanierController extends AbstractController
     /**
      * @Route("/panier", name="panier")
      */
-    public function index(SessionInterface $session, MatosRepository $matosRepository): Response
+    public function index(SessionInterface $session, MatosRepository $matosRepository, Request $r): Response
     {
         $panier = $session->get("panier", []);
 
@@ -35,14 +36,14 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/panier/ajout/{id}", name="panier-ajout")
+     * @Route("/panier/ajout", name="panier-ajout")
      */
 
-    public function add(Matos $matos, SessionInterface $session)
+    public function add(SessionInterface $session, Request $r)
     {
         // On récupère le panier actuel
         $panier = $session->get("panier", []);
-        $id = $matos->getId();
+        $id = $r->request->get('matoId');
 
         if(!empty($panier[$id])){
             $panier[$id]++;
