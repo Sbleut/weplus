@@ -32,12 +32,11 @@
 				<form action="{{path("panier-ajout")}}" method="post">					
 						{% for a in accessoires %}
 						
-							<input name="{{a.id}}" class="btn btn-success" type="checkbox" value="{{a.id}}">
+							<input name="accessoires" class="btn btn-success" type="checkbox" value="{{a.id}}">
 							<h3>{{a.nameMatos}}</h3>
 							<img class="card-img" style="width:auto; height:150px;" src="{{asset('assets/img/img_matos/' ~ a.matosImage)}}" alt="{{mato.MatosImageAlt}}">
-							
-						
-						{% endfor %}
+										
+						{% endfor %}						
 						<input name="matoId" type="hidden" value="{{mato.id}}">
 						<input type="submit" value="Ajouter au panier">
 				</form>

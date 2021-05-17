@@ -13,6 +13,7 @@
 			<tr>
 				<th>matos</th>
 				<th>Prix</th>
+				<th>Accessoires</th>
 				<th>Quantité</th>
 				<th>Total</th>
 				<th>Actions</th>
@@ -24,6 +25,11 @@
 					<td>{{ element.matos.nameMatos }}</td>
 					<td class="text-end">{{ element.matos.prixht }}
 						€</td>
+					<td>
+						{% for a in element.accessoires %}
+							{{a.nameMatos}}
+						{% endfor %}
+					</td>
 					<td>{{ element.quantite }}</td>
 					<td class="text-end">{{ element.quantite * element.matos.prixht }}
 						€</td>
@@ -38,6 +44,8 @@
 							<i class="bi bi-cart-x"></i>
 						</a>
 					</td>
+
+
 				</tr>
 			{% else %}
 				<tr>
@@ -47,7 +55,8 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="3">Total HT </td>
+				<td colspan="3">Total HT
+				</td>
 				<td class="text-end">{{ total }}
 					€</td>
 				<td>
@@ -59,9 +68,30 @@
 		</tfoot>
 	</table>
 	<div class="container">
-		{{ render(controller(
-	'App\\Controller\\ContactController::contact'
-)) }}
-	</div>
+		<form action="{{path("contact")}}" method="post">
+			<div class="form-group">
+				<label for="name">Nom :</label>
+				<input class="form-control" type="text" id="name" name="user_name">
+			</div>
+			<div class="form-group">
+				<label for="mail">e-mail :</label>
+				<input class="form-control" type="email" id="mail" name="user_mail">
+			</div>
+			<div class="form-group">
+				<label for="msg">Message :</label>
+				<textarea class="form-control" id="msg" name="user_message"></textarea>
+			</div>
+			{% set date = date('', 'Europe/Paris') %}
+			<div class="form-group">
+				<label for="start">Start date:</label>
 
+				<input class="form-control" type="date" id="start" name="rent-start" value="{{ date|date('d/m/y') }}" min="{{ date|date('d/m/y') }}" max="2030-12-31">
+			</div>
+			<div class="form-group">
+				<label for="start">End date:</label>
+
+				<input class="form-control" type="date" id="end" name="rent-end" value="{{ date|date('d/m/y') }}" min="{{ date|date('d/m/y') }}" max="2030-12-31"></div>
+			<input type="submit" value="Ajouter au panier">
+		</form>
+	</div>
 {% endblock %}

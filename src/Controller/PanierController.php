@@ -23,14 +23,23 @@ class PanierController extends AbstractController
         $dataPanier = [];
         $total = 0;
 
-        foreach($panier as $id => $quantite){
+        foreach ($panier as $id => ['quantite' => $quantite, 'accessoires_id' => $accessoires_id]) {
             $matos = $matosRepository->find($id);
+            foreach ($accessoires_id as $acid) {
+                if (!empty($acid)) {
+                    $accessoires[] = $matosRepository->find($acid);
+                } else {
+                    $accessoires = null;
+                }
+            }
             $dataPanier[] = [
                 "matos" => $matos,
-                "quantite" => $quantite
+                "quantite" => $quantite,
+                "accessoires" => $accessoires
             ];
             $total += $matos->getPrixHt() * $quantite;
         }
+
 
         return $this->render('panier.html.twig', compact("dataPanier", "total"));
     }
@@ -42,14 +51,29 @@ class PanierController extends AbstractController
     public function add(SessionInterface $session, Request $r)
     {
         // On récupère le panier actuel
-        $panier = $session->get("panier", []);
         $id = $r->request->get('matoId');
-
-        if(!empty($panier[$id])){
-            $panier[$id]++;
-        }else{
-            $panier[$id] = 1;
+        if (!empty($panier[$id]['quantite'])) {
+            $quantite = $panier[$id]['quantite'];
+        } else {
+            $quantite = 0;
         }
+        if (empty($accessoires_id)) {
+            $accessoires_id = null;
+        }
+        $accessoires_id[] = $r->request->get('accessoires');
+
+        $panier = $session->get("panier", [$id => [
+            'quantite' => $quantite,
+            'accessoires_id' => $accessoires_id
+        ]]);        
+
+        if (!empty($panier[$id]['quantite'])) {
+            $panier[$id]['quantite']++;
+        } else {
+            $panier[$id]['quantite'] = 1;
+        }
+
+        $panier[$id]['accessoires_id'] = $accessoires_id;
 
         // On sauvegarde dans la session
         $session->set("panier", $panier);
@@ -66,11 +90,11 @@ class PanierController extends AbstractController
         $panier = $session->get("panier", []);
         $id = $matos->getId();
 
-        if(!empty($panier[$id])){
-            if($panier[$id] > 1){
-                $panier[$id]--;
-            }else{
-                unset($panier[$id]);
+        if (!empty($panier[$id]['quantite'])) {
+            if ($panier[$id]['quantite'] > 1) {
+                $panier[$id]['quantite']--;
+            } else {
+                unset($panier[$id]['quantite']);
             }
         }
 
@@ -89,7 +113,7 @@ class PanierController extends AbstractController
         $panier = $session->get("panier", []);
         $id = $matos->getId();
 
-        if(!empty($panier[$id])){
+        if (!empty($panier[$id])) {
             unset($panier[$id]);
         }
 
