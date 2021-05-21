@@ -9,6 +9,7 @@ use App\Form\ServiceType;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,8 +36,7 @@ class ServicesController extends AbstractController
             ]);
         } else {
 
-            // Je vais déplacer le fichier uploadé
-
+        // GESTION DE l'image
             // On récupère l'image
             $image = $form->get('image_service')->getData();
             // On définit le nom du fichier
@@ -49,8 +49,27 @@ class ServicesController extends AbstractController
                 $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
                 throw new Exception('File upload error');
             }
+        // GESTION DE la Brochure
+            // On récupère la brochure
+            $pdf = $form->get('brochure')->getData();
+            // On vérifie qu'il y a bien un fichier brochure uploadé
+            if (!empty($pdf)) {
+                $pdfname = uniqid() . '.' . $pdf->guessExtension();
+                try {
+                    $pdf->move($this->getParameter('service_brochure_directory'), $pdfname);
+                } catch (FileException $ex) {
+                    $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
+                    throw new Exception('File upload error');
+                }
+            } else {
+                $pdfname = null;
+            }
 
+            // On précise l'emplacement de l'image dans la bdd
             $service->setImageService($fileName);
+
+            // On précise l'emplacement de la brochure dans la bdd
+            $service->setBrochure($pdfname);
 
             $em->persist($service);
             $em->flush();
@@ -72,10 +91,10 @@ class ServicesController extends AbstractController
 
         if (empty($categorie)) throw new NotFoundHttpException();
 
-        if($categorie->getId() == 5) {
+        if ($categorie->getId() == 5) {
             $repository = $this->getDoctrine()->getRepository(MatosCatego::class);
             $matosCategos = $repository->findAll();
-        }        
+        }
 
         return $this->render('services.html.twig', [
             'matosCategos' => $matosCategos,
@@ -89,7 +108,8 @@ class ServicesController extends AbstractController
      * 
      * 
      */
-    public function gererService(): Response {
+    public function gererService(): Response
+    {
         $repository = $this->getDoctrine()->getRepository(Services::class);
         $services = $repository->findAll();
 
@@ -101,12 +121,15 @@ class ServicesController extends AbstractController
     /**
      * @Route("admin/modifier/service/{id}", name="update-service")
      */
-    public function modifierService($id, Request $r): Response {
+    public function modifierService($id, Request $r): Response
+    {
 
         $repo = $this->getDoctrine()->getRepository(Services::class);
         $service = $repo->find($id);
 
         $oldImage = $service->getImageService();
+
+        $oldPdf = $service->getBrochure();
 
         if (empty($service)) throw new NotFoundHttpException();
 
@@ -121,7 +144,7 @@ class ServicesController extends AbstractController
                 'id' => $service->getId()
             ]);
         } else {
-
+        // GESTION DE l'IMAGE
             // Je vais déplacer le fichier uploadé
             $image = $form->get('image')->getData();
 
@@ -131,6 +154,20 @@ class ServicesController extends AbstractController
                 $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
                 throw new Exception('File upload error');
             }
+        // GESTION DE la BROCHURE
+            // On récupère la brochure
+            $pdf = $form->get('brochure')->getData();
+            // On vérifie qu'il y a bien un fichier brochure uploadé
+            if (!empty($pdf)) {
+                try {
+                    $pdf->move($this->getParameter('service_brochure_directory'), $oldPdf);
+                } catch (FileException $ex) {
+                    $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
+                    throw new Exception('File upload error');
+                }
+            }
+
+            $service->setBrochure($oldPdf);
 
             $service->setServiceImage($oldImage);
 
@@ -145,17 +182,39 @@ class ServicesController extends AbstractController
     /**
      * @Route("admin/supprimer/service/{id}", name="delete-service")
      */
-    public function supprimerservice($id): Response {
+    public function supprimerservice($id): Response
+    {
 
         $repo = $this->getDoctrine()->getRepository(service::class);
         $service = $repo->find($id);
 
         if (empty($service)) throw new NotFoundHttpException();
+        
+        $oldImage = $service->getImageService();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('service_brochure_directory'), $oldImage);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($service);
         $em->flush();
 
         return $this->redirectToRoute('gerer_matos');
+    }
+
+    /**
+     * @Route("download/file/service/{id}", name="download-file")
+     */
+
+    public function download($id): Response
+    {
+        $repo = $this->getDoctrine()->getRepository(Services::class);
+        $service = $repo->find($id);
+
+        $formationFileName = $service->getBrochure();
+
+        // send the file contents and force the browser to download it
+        return $this->file($this->getParameter('kernel.project_dir') . '/public/assets/formations/' . $formationFileName);
     }
 }

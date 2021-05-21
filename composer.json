@@ -13,6 +13,7 @@
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.8",
+        "h4cc/wkhtmltopdf-amd64": "^0.12.4",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.2.*",
@@ -36,11 +37,12 @@
         "symfony/serializer": "5.2.*",
         "symfony/string": "5.2.*",
         "symfony/translation": "5.2.*",
-        "symfony/twig-bundle": "^5.2",
+        "symfony/twig-bundle": "5.2.*",
         "symfony/validator": "5.2.*",
         "symfony/web-link": "5.2.*",
         "symfony/yaml": "5.2.*",
-        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/cssinliner-extra": "^3.3",
+        "twig/extra-bundle": "^3.3",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {

@@ -2,9 +2,16 @@
 
 namespace App\Controller;
 
+use App\Form\ContactLocType;
 use App\Form\ContactType;
 use App\Repository\MatosRepository;
+use App\Services\Panier\PanierService;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -37,24 +44,27 @@ class ContactController extends AbstractController
             . 'Si vous voulez lui répondre, veuillez écrire à l\'adresse : ' . $data['email'];
 
 
-        $email = new MimeEmail();
-        $email->from(Address::create('<thomas@weplus.fr>'))
+        $email = (new TemplatedEmail())
+            ->from(Address::create('<thomas@weplus.fr>'))
             ->to($destinataire)
             ->replyTo($data['email'])
             ->subject($objet)
-            ->html("<html><body>$text")
+            ->htmlTemplate('devis')
             ->text($text);
 
         $mailer->send($email);
     }
 
     /**
-     * @Route("/handleContact", name="handlecontact") 
+     * @Route("/handleContact", name="handlecontact")
+     * 
      * 
      */
-    public function handleContact(Request $r, MailerInterface $mailer, SessionInterface $session, MatosRepository $matosRepository)
+    public function handleContact(Request $r, MailerInterface $mailer, PanierService $panierService)
     {
-        $form = $this->createForm(ContactType::class);
+
+        // Service Location de matériel Mailing distribution
+        $form = $this->createForm(ContactLocType::class);
 
         $form->handleRequest($r);
 
@@ -65,62 +75,26 @@ class ContactController extends AbstractController
 
             $data = $form->getData();
 
-            dd($r);
+            $dataPanier = $panierService->getPanier()[0];
 
-            switch ($data['objet']->getId()) {
-                case 1:
-                    //Service Audiovisuel Mailing Distribution
-                    break;
-                case 2:
-                    //SErvice Photographie Mailing Distribution
-                    break;
-                case 3:
-                    // SErvice Digital Mailing distribution
-                    break;
-                case 4:
-                    // Service Formation Mailing distribution
-                    break;
-                case 5:
-                    // Service Location de matériel Mailing distribution
-                    $panier = $session->get("panier", []);
+            $total = $panierService->getPanier()[1];
 
-                    // On "fabrique" les données
-                    $dataPanier = [];
-                    $total = 0;
-
-                    foreach ($panier as $id => $quantite) {
-                        $matos = $matosRepository->find($id);
-                        $dataPanier[] = [
-                            "matos" => $matos,
-                            "quantite" => $quantite
-                        ];
-                        $total += $matos->getPrixHt() * $quantite;
-                    }
-
-                    break;
-                default:
-            }
-
-
-
-
-            $text = 'Quelqu\'un vous a envoyé une demande de contact sur votre site. Cette personne s\'appelle ' . $data['nom'] . '.' . PHP_EOL . PHP_EOL
-                . 'Voici son message : ' . PHP_EOL . PHP_EOL
-                . $data['message'] . PHP_EOL . PHP_EOL
-                . 'Si vous voulez lui répondre, veuillez écrire à l\'adresse : ' . $data['email'];
-
-
-            $email = new MimeEmail();
-            $email->from(Address::create('test <thomas@weplus.fr>'))
+            $mail = (new TemplatedEmail())
+                ->from(Address::create('<thomas@weplus.fr>'))
                 ->to('thomas.sublet@gmail.com')
                 ->replyTo($data['email'])
-                ->subject('Tu as reçu un mail de contact !')
-                ->html('<html><body>test')
-                ->text($text);
+                ->subject('test')
+                ->htmlTemplate('devis-variable.html.twig')
+                ->context([
+                    'data' => $data,
+                    'dataPanier' => $dataPanier,
+                    'total' => $total,
+                ]);
 
-            $mailer->send($email);
 
-            return $this->redirectToRoute('accueil');
+            $mailer->send($mail);
+
+            return $this->redirect('/accueil');
         }
     }
 }

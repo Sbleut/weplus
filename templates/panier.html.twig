@@ -28,70 +28,47 @@
 					<td>
 						{% for a in element.accessoires %}
 							{{a.nameMatos}}
+							à
+							{{a.prixht}}
+							€
 						{% endfor %}
 					</td>
-					<td>{{ element.quantite }}</td>
-					<td class="text-end">{{ element.quantite * element.matos.prixht }}
+					<td></td>
+					<td class="text-end">{{ element.matos.prixht }}
 						€</td>
 					<td>
-						<a href="{{path("panier-ajout", {id: element.matos.id})}}" class="btn btn-success">
-							<i class="bi bi-cart-plus"></i>
-						</a>
-						<a href="{{path("panier-remove", {id: element.matos.id})}}" class="btn btn-warning">
-							<i class="bi bi-cart-dash"></i>
-						</a>
-						<a href="{{path("panier-delete", {id: element.matos.id})}}" class="btn btn-danger">
+						<form action="{{path("panier-ajout")}}" method="post">
+							
+								<input name="matoId" type="hidden" value="{{element.matos.id}}">
+								<div class="input-group">
+								<button type="submit" class="btn btn-primary">
+								<i class="bi bi-cart-plus "></i>
+								</button>
+								</div>
+							
+						</form>
+						<a href="{{path("panier-delete", {id: loop.index0 })}}" class="btn btn-danger">
 							<i class="bi bi-cart-x"></i>
 						</a>
 					</td>
-
-
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="5" class="text-center">Votre panier est vide</td>
-				</tr>
-			{% endfor %}
+			</td>
 		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="3">Total HT
-				</td>
-				<td class="text-end">{{ total }}
-					€</td>
-				<td>
-					<a href="{{path("panier-delete-all")}}" class="btn btn-danger">
-						<i class="bi bi-cart-x"></i>
-					</a>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	<div class="container">
-		<form action="{{path("contact")}}" method="post">
-			<div class="form-group">
-				<label for="name">Nom :</label>
-				<input class="form-control" type="text" id="name" name="user_name">
-			</div>
-			<div class="form-group">
-				<label for="mail">e-mail :</label>
-				<input class="form-control" type="email" id="mail" name="user_mail">
-			</div>
-			<div class="form-group">
-				<label for="msg">Message :</label>
-				<textarea class="form-control" id="msg" name="user_message"></textarea>
-			</div>
-			{% set date = date('', 'Europe/Paris') %}
-			<div class="form-group">
-				<label for="start">Start date:</label>
-
-				<input class="form-control" type="date" id="start" name="rent-start" value="{{ date|date('d/m/y') }}" min="{{ date|date('d/m/y') }}" max="2030-12-31">
-			</div>
-			<div class="form-group">
-				<label for="start">End date:</label>
-
-				<input class="form-control" type="date" id="end" name="rent-end" value="{{ date|date('d/m/y') }}" min="{{ date|date('d/m/y') }}" max="2030-12-31"></div>
-			<input type="submit" value="Ajouter au panier">
-		</form>
-	</div>
-{% endblock %}
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="5" class="text-center">Votre panier est vide</td>
+	</tr>
+{% endfor %}</tbody><tfoot>
+<tr>
+	<td colspan="3">Total HT
+	</td>
+	<td class="text-end">{{ total }}
+		€</td>
+	<td>
+		<a href="{{path("panier-delete-all")}}" class="btn btn-danger">
+			<i class="bi bi-cart-x"></i>
+		</a>
+	</td>
+</tr></tfoot></table><div class="container">{{ form(form, {'action': path('handlecontact')}) }}
+s</div>{% endblock %}

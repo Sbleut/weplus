@@ -1,6 +1,7 @@
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}Le Concept{% endblock %}
+{% block title %}Le Concept
+{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
@@ -8,8 +9,48 @@
 
 {% block body %}
 
-    {% for c in causes %}
+	<main classs="container">
+		<div class="card mb-3">
+			<h1 class="card-title">Notre Concept</h1>
+			<img class="card-img-top" src="{{asset('assets/img/img_static/concept.jpg')}}" alt="Card image cap">
+			<div class="card-body">
 
-    {% endfor %}
+				<p class="card-text">Imaginez que votre projet de communication ait un effet positif sur la société. C’est ce que nous vous proposons. Comment ?
+										‍
+										1
+										Ensemble, créons la communication de vos rêves
+										‍
+										2
+										Choisissez la cause défendue par WePlus que vous souhaitez soutenir
+										‍
+										3
+										Bénéficiez de la visibilité de votre sponsoring
+										‍
+										En effet, chez WePlus une partie des bénéfices de chaque projet est réservée à la réalisation de créations audiovisuelles ou photographiques pour une cause que vous sponsorisez.
+										‍
+										Autrement dit, vous favorisez votre business tout en faisant une bonne action. Eh oui, c’est possible !
+										‍
+										Chez WePlus, nous appelons ça la communication GGG (Gagnante-Gagnante-Gagnante).
+				</p>
+				<p class="card-text">
+					<small class="text-muted">Last updated 3 mins ago</small>
+				</p>
+			</div>
+		</div>
 
+		{% for c in causes %}
+			<div class="card mb-3" style="width: 24rem;">
+				<img class="card-img-top" src="{{asset('assets/img/img_cause/' ~ c.ImageCause)}}" alt="Card image cap">
+				<div class="card-body">
+					<h2 class="card-title">{{c.nomCause}}</h2>
+					<p class="card-text">{{c.citation}}</p>
+                    <div class="card-body">
+                    {% for entreprise in c.entreprises %}
+					<img class="img-thumbnail" src="{{asset('assets/img/logo_entreprise/' ~ entreprise.logo)}}" alt="" style="width: 6rem;"/>
+                    {% endfor %}
+                    </div>
+				</div>
+			</div>
+		{% endfor %}
+	</main>
 {% endblock %}

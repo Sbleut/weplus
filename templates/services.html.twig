@@ -1,6 +1,6 @@
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{% endblock %}
+{% block title %}{{categorie.title}}{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
@@ -25,6 +25,9 @@
 							<p class="card-text">{{service.text}}</p>
 							<p class="card-text">
 								<small class="text-muted">Last updated 3 mins ago</small>
+								{% if categorie.title == 'Formations' %}
+									<a href="{{ path('download-file', {'id': service.id}) }}">download</a>
+								{% endif %}
 							</p>
 						</div>
 					</div>
@@ -42,7 +45,7 @@
 							<img class="card-img-top" src="{{asset('assets/img/img_matos_catego/' ~ matosCatego.matosCategoImage)}}" alt="{{matosCatego.matosCategoImageAlt}}">
 							<div class="card-body">
 								<h2 class="card-title">{{matosCatego.name}}</h2>
-								
+
 								<p class="card-text">
 									<small class="text-muted">
 										<a href="{{ path('matos-categorie', {'id': matosCatego.id}) }}">{{matosCatego.name}}</a>
@@ -56,6 +59,12 @@
 			</section>
 
 		{% endif %}
+
+		<section class="container">
+		{{render(controller(
+			'App\\Controller\\ContactController::contact'))
+			}}
+		</section>
 
 	</main>
 

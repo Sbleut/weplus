@@ -130,6 +130,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "h4cc/wkhtmltopdf-amd64": {
+        "version": "0.12.4"
+    },
     "kelunik/certificate": {
         "version": "v1.1.2"
     },
@@ -565,6 +568,12 @@
     },
     "symfony/yaml": {
         "version": "v5.2.5"
+    },
+    "tijsverkoyen/css-to-inline-styles": {
+        "version": "2.2.3"
+    },
+    "twig/cssinliner-extra": {
+        "version": "v3.3.0"
     },
     "twig/extra-bundle": {
         "version": "v3.3.0"

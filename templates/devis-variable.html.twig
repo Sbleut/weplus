@@ -1,8 +1,10 @@
 <html>
+{% apply inline_css(source('@styles/email.css')) %}
+{% set logo = email.image('@img/logo_weplus.png') %}
 	<body>
 		<header>
 			<div id="Weplus">
-				<img src="{{asset('assets/img/logo_weplus.png')}}">
+				<img id="logo" src="{{ logo }}">
 				<p>31 boulevard Preuilly 37000 - TOURS</p>
 				<p>Siret : 84114424900023</p>
 				<h3>Weplus</h3>
@@ -12,18 +14,18 @@
 				</p>
 			</div>
 			<div id="client">
-				<h3>{{nom}} {{prenom}}</h3>
-				<p>{{adresse}}</p>
+				<h3>{{data.nom}}</h3>
+				<p>{{data.email}}</p>
 			</div>
 			<div id="devis">
 			<h1>Devis</h1>
-			<p>Date : {{date}}</p>
-			<p>Devis valable jusqu'au {{date +7}}</p>
+			<p>Date : {{date()|date('d/m/y')}}</p>
+			<p>Devis valable jusqu'au </p>
 			</div>
 		</header>
 
 		<main>
-			<h2>Location de matériel audiovisuel pour {{(date de fin - date de début)/60/60/24}}</h2>
+			<h3>Location de matériel audiovisuel du {{data.start|date('d/m/y')}} au {{data.end|date('d/m/y')}}</h3>
 			<table id="matos-louer">
 				<thead>
 					<tr>
@@ -36,13 +38,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for a in panier %}
+					{% for element in dataPanier %}
 					<tr>
-						<td>{{a.nameMatos}}</td>
-						<td>{{a.quantite}}</td>
-						<td></td>
-						<td>{{a.prixHt}}</td>
-						<td>{{(a.prixHT)*(a.quantite)}}</td>
+						<td>{{ element.matos.nameMatos}}</td>
+						<td>{{element.quantite}}</td>
+						<td>
+						{% for a in element.accessoires %}
+							{{a.nameMatos}}
+						{% endfor %}
+						</td>
+						<td>{{element.matos.prixht}} €</td>
+						<td>{{(element.matos.prixHT)*(element.quantite)}}</td>
 						<td>O,OO%</td>
 					</tr>
 					{% endfor %}
@@ -75,15 +81,15 @@
 					<table>
 						<tr>
 							<td>Total HT</td>
-							<td>{{panier.total}}</td>
+							<td>{{total}}</td>
 						</tr>
 						<tr>
 							<td>TVA</td>
-							<td>{{tva}}</td>
+							<td>20%</td>
 						</tr>
 						<tr>
 							<td>Total TTC</td>
-							<td>{{(panier.total)+((panier.total)*(tva))}}</td>
+							<td>{{total}}</td>
 						</tr>
 					</table>
 				</div>
@@ -121,12 +127,13 @@
 						<td>BIC</td>
 						<td>CCOPFRPPXXX</td>
 					</tr>
-				</table>
-				
+				</table>				
 			</section>
+
 		</main>
 		<footer>
 			<p>SCOP SARL WEPLUS - 31 BOULEVARD PREUILLY 37000 TOURS - Code NAF (APE) 7021Z - N° RCS 841144249 - Tours - SCOP au capital variable de 36050 € - Siret: 84114424900023</p>
 		</footer>
 	</body>
-</html></body></html>
+	{% endapply %}
+</html>

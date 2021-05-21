@@ -43,6 +43,11 @@ class Services
      */
     private $categorie;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $brochure;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Services
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getBrochure(): ?string
+    {
+        return $this->brochure;
+    }
+
+    public function setBrochure(?string $brochure): self
+    {
+        $this->brochure = $brochure;
 
         return $this;
     }

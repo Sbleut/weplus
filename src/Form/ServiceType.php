@@ -88,6 +88,23 @@ class ServiceType extends AbstractType
                 ]
  
             ])
+            ->add('brochure', FileType::class, [
+                'label' => 'brochure',
+                'data_class' => null,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'application/pdf',
+                        ]
+                    
+                    ])
+                ],
+                'attr' => [
+                    'class' => 'form-field',
+                    'placeholder' => 'Fichier pdf inférieur à 5 Mo'
+                    ]
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter un service',
                 'attr' => [

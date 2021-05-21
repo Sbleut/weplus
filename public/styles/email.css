@@ -1,0 +1,91 @@
+body{
+    max-width: 1500px;
+    max-height: 2000px;
+}
+
+header{
+    display: flex;
+}
+
+h2{
+    background-color: #25be85;
+    color: white;
+    margin: 0;
+    padding: 0.2rem;
+}
+table tr{
+    display: flex;
+}
+table td{
+    width: 100%;
+}
+
+#logo{
+    max-width: 200px;
+    height: auto;
+}
+
+#client{
+    margin-top: 10rem;
+    width: 40%;
+    padding-left: 15%;
+}
+#matos-louer{
+    width: 100%;		
+}
+
+#matos-louer thead{
+    width: 100%;
+    background: #25be85;
+    color: white;
+    border: none;
+}
+table, thead, th{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+#tva{
+    width: 100%;
+    display: flex;
+    margin-top: 2rem;
+}
+
+
+#details{
+    width: 100%;
+}
+#details table{
+    width: 100%;
+}
+
+.totaux{
+    display: flex;
+    width: 50%;
+    flex-direction: row-reverse;
+}
+
+#bon h2{
+    text-align: center;
+}
+#bon p{
+    margin-top: 0.2rem;
+    margin-bottom: 4rem;
+}
+
+#coordonnee table{
+    width: 60%;
+}
+
+footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+footer p{
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    margin-top: 1rem;
+}
