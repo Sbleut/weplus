@@ -37,4 +37,20 @@ class StaticController extends AbstractController
             'total' => $total,
         ]);
     }
+
+
+    /**
+     * @Route("/accueil/admin", name="admin")
+     */        
+    public function guideAdmin(): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Categorie::class);
+        $categories = $repository->findAll();
+
+        return $this->render('admin/index.html.twig', [
+            'categories' => $categories
+        ]);
+    }
+
+    
 }

@@ -9,11 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AdminController extends AbstractController
 {
     /**
      * @Route("/create/admin", name="create_admin")
+     * 
+     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function createAdmin(Request $r, UserPasswordEncoderInterface $encoder): Response
@@ -31,10 +34,10 @@ class AdminController extends AbstractController
             $entityManager->persist($admin);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_index');
+            return $this->redirectToRoute('accueil');
         }
 
-        return $this->render('accueil.html.twig', [
+        return $this->render('admin/create-admin.html.twig', [
             'admin' => $admin,
             'form' => $form->createView(),
         ]);

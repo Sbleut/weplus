@@ -12,11 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class MatosCategoController extends AbstractController
 {
     /**
      * @Route("/admin/create/matos-catego", name="create-matos-categorie")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function createCategorie(Request $r): Response
     {
@@ -80,6 +84,7 @@ class MatosCategoController extends AbstractController
     /**
      * @Route("/admin/gerer/matos/categorie", name="gerer-matos-categorie")
      * 
+     * @IsGranted("ROLE_ADMIN") 
      * 
      */
     public function gererCategorie(): Response {
@@ -93,6 +98,9 @@ class MatosCategoController extends AbstractController
 
     /**
      * @Route("admin/modifier/matos/categorie/{id}", name="update-matos-categorie")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function modifierMatosCatego($id, Request $r): Response {
 
@@ -137,6 +145,9 @@ class MatosCategoController extends AbstractController
 
     /**
      * @Route("admin/supprimer/matos/categorie/{id}", name="delete-matos-categorie")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function supprimerMatosCatego($id): Response {
 

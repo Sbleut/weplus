@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EntrepriseController extends AbstractController
 {
@@ -27,6 +28,9 @@ class EntrepriseController extends AbstractController
 
     /**
      * @Route("/admin/create/entreprise", name="create-entreprise")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function createAsso(Request $r): Response
     {
@@ -70,6 +74,7 @@ class EntrepriseController extends AbstractController
     /**
      * @Route("/admin/gerer/entreprise", name="gerer-entreprise")
      * 
+     * @IsGranted("ROLE_ADMIN") 
      * 
      */
     public function gererEntreprises(): Response {
@@ -84,6 +89,9 @@ class EntrepriseController extends AbstractController
 
     /**
      * @Route("admin/modifier/entreprise/{id}", name="modifier-entreprise")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function modifierEntreprise($id, Request $r): Response
     {
@@ -129,6 +137,9 @@ class EntrepriseController extends AbstractController
 
     /**
      * @Route("admin/supprimer/entreprise/{id}", name="supprimer-entreprise")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function supprimerEntreprise($id): Response
     {

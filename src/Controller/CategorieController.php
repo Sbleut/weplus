@@ -12,11 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class CategorieController extends AbstractController
 {
     /**
      * @Route("/admin/create/categorie", name="create-categorie")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function createCategorie(Request $r): Response
     {
@@ -59,6 +63,8 @@ class CategorieController extends AbstractController
 
     /**
      * 
+     *  
+     * 
      */
     public function retrieveAll(): Response
     {
@@ -73,6 +79,7 @@ class CategorieController extends AbstractController
     /**
      * @Route("/admin/gerer/categorie", name="gerer-categorie")
      * 
+     * @IsGranted("ROLE_ADMIN") 
      * 
      */
     public function gererCategorie(): Response {
@@ -87,6 +94,7 @@ class CategorieController extends AbstractController
     /**
      * @Route("/admin/update/categorie/{id}", name="update-categorie")
      * 
+     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function updateCategorie($id, Request $r): Response
@@ -139,6 +147,9 @@ class CategorieController extends AbstractController
 
     /**
      * @Route("admin/supprimer/matos/categorie/{id}", name="delete-categorie")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function supprimerCategorie($id): Response {
 

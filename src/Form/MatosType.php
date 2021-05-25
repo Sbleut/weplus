@@ -118,7 +118,7 @@ class MatosType extends AbstractType
                     $objectCatego = $matos->getMatosCatego();
                     $categoId = $objectCatego->getId();
                     if($categoId == 2){
-                    return strtoupper($matos->getNameMatos());
+                    return $matos->getNameMatos();
                     }
                     die;
                 },

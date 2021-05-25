@@ -13,11 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class MatosController extends AbstractController
 {
     /**
      * @Route("/admin/create/matos", name="create-matos")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function createMatos(Request $r): Response
     {
@@ -97,6 +101,7 @@ class MatosController extends AbstractController
     /**
      * @Route("/admin/gerer/matos", name="gerer-matos")
      * 
+     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function gererMatos(): Response
@@ -131,6 +136,9 @@ class MatosController extends AbstractController
 
     /**
      * @Route("admin/modifier/matos/{id}", name="modifier-matos")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function modifierMatos($id, Request $r): Response
     {
@@ -176,6 +184,9 @@ class MatosController extends AbstractController
 
     /**
      * @Route("admin/supprimer/matos/{id}", name="supprimer-matos")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function supprimerMatos($id): Response
     {

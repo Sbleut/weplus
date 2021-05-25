@@ -16,11 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ServicesController extends AbstractController
 {
     /**
      * @Route("/admin/create/service", name="create-service")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function createService(Request $r, EntityManagerInterface $em): Response
     {
@@ -106,6 +110,7 @@ class ServicesController extends AbstractController
     /**
      * @Route("/admin/gerer/service", name="gerer-services")
      * 
+     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function gererService(): Response
@@ -120,6 +125,9 @@ class ServicesController extends AbstractController
 
     /**
      * @Route("admin/modifier/service/{id}", name="update-service")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function modifierService($id, Request $r): Response
     {
@@ -181,6 +189,9 @@ class ServicesController extends AbstractController
 
     /**
      * @Route("admin/supprimer/service/{id}", name="delete-service")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
     public function supprimerservice($id): Response
     {
