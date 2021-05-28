@@ -9,7 +9,16 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
+		{{form_row(form.name_matos, {'label': 'Nom du matériel de location'})}}
+		{{form_row(form.stock, {'label': 'Stock'})}}
+		{{form_row(form.prix_ht, {'label': 'prix hors taxe de la location pour une journée'})}}
+		{{form_row(form.caution, {'label': 'prix de la caution'})}}
+		{{form_row(form.matos_catego, {'label': 'catégorie de matériel'})}}
+		{{form_row(form.matos_image, {'label': 'photo du matériel à louer'})}}
+		{{form_row(form.matos_image_alt, {'label': 'Description du matériel pour les malvoyants'})}}
+		{{form_row(form.accessoires, {'label': 'Accessoires possibles avec ce matériel'})}}
+	
+		{{form_row(form.submit, {'label': 'Ajouter un matériel à louer'})}}
 		
 
 

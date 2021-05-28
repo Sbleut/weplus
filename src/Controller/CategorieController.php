@@ -102,12 +102,7 @@ class CategorieController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(categorie::class);
         $categorie = $repo->find($id);
 
-        if( $categorie->getProducteur() != $this->getUser() && !$this->IsGranted('ROLE_ADMIN')){
-
-            return $this->redirectToRoute('accueil');
-        }
-
-        $oldImageCatego = $categorie->getImageCatego();
+        $oldImage = $categorie->getImageCatego();
 
         if (empty($categorie)) throw new NotFoundHttpException();
 
@@ -116,9 +111,9 @@ class CategorieController extends AbstractController
         $form->handleRequest($r);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->render('modifier-categorie.html.twig', [
+            return $this->render('admin/update-catego.html.twig', [
                 'form' => $form->createView(),
-                'oldImageCatego' => $oldImageCatego,
+                'oldImage' => $oldImage,
                 'categorie' => $categorie
             ]);
         } else {
@@ -127,19 +122,19 @@ class CategorieController extends AbstractController
             $imageCatego = $form->get('image_catego')->getData();
 
             try {
-                $imageCatego->move($this->getParameter('categorie_photo_directory'), $oldImageCatego);
+                $imageCatego->move($this->getParameter('categorie_image_directory'), $oldImage);
             } catch (FileException $ex) {
                 $form->addError(new FormError('Une erreur est survenue pendant l\'upload du fichier : ' . $ex->getMessage()));
                 throw new Exception('File upload error');
             }
 
-            $categorie->setphoto($oldImageCatego);
+            $categorie->setImageCatego($oldImage);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirect('/categorie/' . $categorie->getId());
+            return $this->redirect('/admin/gerer/categorie');
         }
     }
 

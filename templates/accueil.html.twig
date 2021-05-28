@@ -1,40 +1,42 @@
 {% extends "layout/layout.html.twig" %}
 
-	{% block title %}{% endblock %}
+{% block title %}{% endblock %}
 
 {% block stylesheets %}
-	
+	<link rel="stylesheet" href="{{asset('styles/css/home.css')}}">
+
 {% endblock %}
 
-{% block javascripts %}
-	
-{% endblock %}
+{% block javascripts %}{% endblock %}
 
 {% block body %}
 	<main>
-		<section>
+		<section class="home-title">
 			<h1>Weplus Communiquer en vidéo</h1>
 			<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
 		</section>
 
-		<section class="container d-flex justify-content-around flex-wrap">
-		{% for categorie in categories %}
-			
-				<div class="card m-3" style="width: 18rem;">
-					<img class="card-img-top" src="{{asset('assets/img/img_catego/' ~ categorie.ImageCatego)}}" alt="Card image cap">
-					<div class="card-body">
-						<h2 class="card-title">{{categorie.title}}</h2> 
-						<p class="card-text">{{categorie.subtitle}}</p>
-						<p class="card-text">
-							<small class="text-muted"  ><a href="{{ path('services', {'id': categorie.id}) }}">{{categorie.title}}</a></small>
+		<section class="home-body d-flex justify-content-around flex-wrap">
+			{% for categorie in categories %}
+
+				<div class="home-card" id="number{{ loop.index }}">
+					<div class="home-card-img">
+						<img src="{{asset('assets/img/img_catego/' ~ categorie.ImageCatego)}}" alt="{{categorie.ImageCategoAlt}}">
+					</div>
+					<div class="home-card-body">
+						<h2 class="home-card-title">{{categorie.title}}</h2>
+						<p class="home-card-text">{{categorie.subtitle}}</p>
+						<p class="home-card-text">
+							<small class="home-card-link">
+								<a href="{{ path('services', {'id': categorie.id}) }}">{{categorie.title}}</a>
+							</small>
 						</p>
 					</div>
 				</div>
-			
-		{% endfor %}
+
+			{% endfor %}
 		</section>
 	</main>
-
 
 
 {% endblock %}

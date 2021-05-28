@@ -9,9 +9,15 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
 		
-
+		{{form_row(form.nameAsso, {'label': 'Nom de l\'association'})}}
+		{{form_row(form.lienAsso, {'label': 'Lien du site de l\'association'})}}
+		{{form_row(form.resoAsso, {'label': 'lien des réseaux sociaux de l\'association'})}}
+		{{form_row(form.textAsso, {'label': 'Descriptif succint de l\'association'})}}
+		{{form_row(form.asso_image, {'label': 'Fichier image de l\'association'})}}
+		{{form_row(form.asso_image_alt, {'label': 'Description de l\'image pour les malvoyants'})}}
+		{{form_row(form.causes, {'label': 'Cause défendu par l\'association'})}}
+		{{form_row(form.submit, {'label': 'Submit me'})}}	
 
 	</div>
 	{{ form_end(form) }}

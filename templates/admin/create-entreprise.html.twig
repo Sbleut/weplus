@@ -9,7 +9,13 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
+		{{form_row(form.nameEntreprise, {'label': 'Nom de l\'entreprise'})}}
+		{{form_row(form.lienEntreprise, {'label': 'Lien du site de l\'entreprise'})}}
+		{{form_row(form.logo, {'label': 'Fichier du logo de l\'entreprise'})}}
+		{{form_row(form.logo_alt, {'label': 'Description du logo à destination des malvoyants'})}}
+		{{form_row(form.causes, {'label': 'Causes'})}}
+	
+		{{form_row(form.submit, {'label': 'Ajouter une entreprise'})}}
 		
 
 

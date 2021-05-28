@@ -150,20 +150,34 @@ class MatosController extends AbstractController
 
         if (empty($matos)) throw new NotFoundHttpException();
 
+        
+        $accessoires_id = $matos->getAccessoires();
+        $accessoires = [];
+
+        if (!empty($accessoires_id)) {
+            foreach ($accessoires_id as $accessoire_id) {
+                $accessoires[] = $repo->find($accessoire_id);
+            }
+        }
+
+        $matos->setAccessoires($accessoires);
+
         $form = $this->createForm(matosType::class, $matos);
+        
 
         $form->handleRequest($r);
+        
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->render('matos/modifier-matos.html.twig', [
+            return $this->render('admin/update-matos.html.twig', [
                 'form' => $form->createView(),
                 'oldImage' => $oldImage,
-                'id' => $matos->getId()
+                'id' => $id
             ]);
         } else {
 
             // Je vais déplacer le fichier uploadé
-            $image = $form->get('image')->getData();
+            $image = $form->get('matos_image')->getData();
 
             try {
                 $image->move($this->getParameter('matos_image_directory'), $oldImage);
@@ -172,7 +186,7 @@ class MatosController extends AbstractController
                 throw new Exception('File upload error');
             }
 
-            $matos->setImage($oldImage);
+            $matos->setMatosImage($oldImage);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($matos);

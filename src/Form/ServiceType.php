@@ -96,10 +96,10 @@ class ServiceType extends AbstractType
                         'maxSize' => '5M',
                         'mimeTypes' => [
                             'application/pdf',
-                        ]
-                    
-                    ])
+                        ]                    
+                    ]),
                 ],
+                'required' => false,
                 'attr' => [
                     'class' => 'form-field',
                     'placeholder' => 'Fichier pdf inférieur à 5 Mo'

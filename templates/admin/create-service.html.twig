@@ -1,6 +1,6 @@
 {% extends 'layout/layout.html.twig' %}
 
-{% block title %}Create Catego
+{% block title %}Créer un service
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,14 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
+		{{form_row(form.name, {'label': 'Nom du service'})}}
+		{{form_row(form.image_service, {'label': 'image du service'})}}
+		{{form_row(form.image_service_alt, {'label': 'Description du service pour les malvoyants'})}}
+		{{form_row(form.text, {'label': 'Descriptif du service'})}}		
+		{{form_row(form.categorie, {'label': 'catégorie du service'})}}
+		{{form_row(form.brochure, {'label': 'Brochure de description de la formation'} )}}
+	
+		{{form_row(form.submit, {'label': 'Ajouter un service'})}}
 
 		
 	</div>

@@ -7,11 +7,17 @@
 
 	<h1>Admin</h1>
 
-	{{ form_start(form) }}
+	{{ form_start(form, {'action': path('update-categorie', {'id': categorie.id}) }}
 	<div class="container">
 		<img src="{{asset('assets/img/img_catego/' ~ oldImage)}}" alt="">
-		{{ form( form, {'action': path('modifier-categorie', {'id': id}) }) }}
-		</div>
+		{{form_row(form.Title, {'label': 'Nom de la catégorie'})}}
+		{{form_row(form.sub_title, {'label': 'Sous-titre qui apparaîtra sur la homepage.'})}}
+		{{form_row(form.description, {'label': 'DEscription de la catégorie de service'})}}
+		{{form_row(form.image_catego, {'label': 'Image de la catégorie, qui apparaîtra sur la homepage.'})}}
+		{{form_row(form.image_catego_alt, {'label': 'Description du fichier à destination des malvoyants'})}}
+		{{form_row(form.google_description, {'label': 'Description google'})}}
+	
+		{{form_row(form.submit, {'label': 'Ajouter une catégorie de services'})}}
 		
 
 

@@ -9,7 +9,11 @@
 
 	{{ form_start(form) }}
 	<div class="container">
-		{{ form_widget(form) }}
+		{{form_row(form.name, {'label': 'Nom de la catégorie de matériel'})}}
+		{{form_row(form.matos_catego_image, {'label': 'image représentant la catégorie de matériel'})}}
+		{{form_row(form.matos_catego_image_alt, {'label': 'Description de l\'image à destination des malvoyants'})}}
+	
+		{{form_row(form.submit, {'label': 'Ajouter une catégorie de matériel'})}}
 
 	</div>
 	{{ form_end(form) }}

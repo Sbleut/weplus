@@ -67,7 +67,7 @@ class MatosType extends AbstractType
                 'placeholder' => '-- Choisir une catégorie --',
                 'class' => MatosCatego::class,
                 'choice_label' => function (MatosCatego $categorie) {
-                    return strtoupper($categorie->getName());
+                    return $categorie->getName();
                 },
                 'constraints' => [
                     new NotBlank(),
@@ -123,10 +123,7 @@ class MatosType extends AbstractType
                     die;
                 },
                 'multiple' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ]
-
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter un Matos à louer',

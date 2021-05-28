@@ -7,6 +7,7 @@ use App\Services\Panier\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class StaticController extends AbstractController
 {
@@ -41,6 +42,8 @@ class StaticController extends AbstractController
 
     /**
      * @Route("/accueil/admin", name="admin")
+     * 
+     * @IsGranted("ROLE_ADMIN")
      */        
     public function guideAdmin(): Response
     {

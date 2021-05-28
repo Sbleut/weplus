@@ -1,0 +1,55 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}Toutes les assos partenaires
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div style="container">
+
+		<a href="{{ path('create-admin') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer un compte administrateur</a>
+
+		<table id="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>email</th>
+			</thead>
+			<tbody>
+				{% for a in admins %}
+					<tr>
+						<td>{{ a.id }}</td>
+						<td>{{ a.email }}</td>
+				
+						<td>
+							
+						</td>
+					</tr>
+				{% else %}
+					<tr>Il n'y a aucun asso à afficher.</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('create-admin') }}" class="btn btn-success">
+			<i class="fas fa-plus mr-4"></i>Créer un asso</a>
+
+	</div>
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#table').DataTable();
+});
+	</script>
+{% endblock %}

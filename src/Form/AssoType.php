@@ -81,7 +81,6 @@ class AssoType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'form-field',
-                    'placeholder' => 'Fichier image inférieur à 5 Mo'
                     ]
             ])
             ->add('asso_image_alt', TextType::class, [

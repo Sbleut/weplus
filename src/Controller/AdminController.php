@@ -42,5 +42,20 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/admin/gerer/admin", name="gerer-admin")
+     * 
+     * @IsGranted("ROLE_ADMIN") 
+     * 
+     */
+    public function gererAdmin(): Response {
+        $repository = $this->getDoctrine()->getRepository(Admins::class);
+        $admins = $repository->findAll();
+
+        return $this->render('admin/gerer-categorie.html.twig', [
+            'admins' => $admins
+        ]);
+    }
 }
       

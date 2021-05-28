@@ -154,7 +154,7 @@ class ServicesController extends AbstractController
         } else {
         // GESTION DE l'IMAGE
             // Je vais déplacer le fichier uploadé
-            $image = $form->get('image')->getData();
+            $image = $form->get('image_service')->getData();
 
             try {
                 $image->move($this->getParameter('service_image_directory'), $oldImage);
@@ -177,13 +177,13 @@ class ServicesController extends AbstractController
 
             $service->setBrochure($oldPdf);
 
-            $service->setServiceImage($oldImage);
+            $service->setImageService($oldImage);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($service);
             $em->flush();
 
-            return $this->redirect('/service/' . $service->getId());
+            return $this->redirect('/admin/gerer/service');
         }
     }
 
