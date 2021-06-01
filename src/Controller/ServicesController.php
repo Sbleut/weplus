@@ -205,7 +205,7 @@ class ServicesController extends AbstractController
 
         $filesystem = new Filesystem();
 
-        $filesystem->remove($this->getParameter('service_brochure_directory'), $oldImage);
+        $filesystem->remove($this->getParameter('service_image_directory'), $oldImage);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($service);

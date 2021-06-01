@@ -1,8 +1,12 @@
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{categorie.title}}{% endblock %}
+{% block title %}
+	{{categorie.title}}
+{% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('styles/css/services.css')}}">
+{% endblock %}
 
 {% block javascripts %}{% endblock %}
 
@@ -17,14 +21,18 @@
 
 			<section class="container">
 				{% for service in services %}
-
-					<div class="card mb-3">
-						<img class="card-img-top" src="{{asset('assets/img/img_service/' ~ service.ImageService)}}" alt="Card image cap">
-						<div class="card-body">
-							<h2 class="card-title">{{service.name}}</h2>
-							<p class="card-text">{{service.text}}</p>
-							<p class="card-text">
-								<small class="text-muted">Last updated 3 mins ago</small>
+					<div class="service-card">
+						<div class="service-card-img">
+							<img class="service-img" src="{{asset('assets/img/img_service/' ~ service.ImageService)}}" alt="Card image cap">
+						</div>
+						<div class="service-card-body">
+							<div class="designed-back">
+								<div>{{categorie.title}}</div>
+							</div>
+							<h2 class="service-card-title">{{service.name}}</h2>
+							<p class="service-card-text">{{service.text|slice(0,145)}}
+								...</p>
+							<p class="service-card-text">
 								{% if categorie.title == 'Formations' %}
 									<a href="{{ path('download-file', {'id': service.id}) }}">download</a>
 								{% endif %}
@@ -35,37 +43,57 @@
 				{% endfor %}
 			</section>
 
+
 		{% else %}
 
 			<section class="container">
 
 				{% for matosCatego in matosCategos %}
 					{% if matosCatego.name != 'Accessoires'%}
-						<div class="card mb-3" >
-							<img class="card-img-top" style="max-height: 300px; width: auto; object-fit: cover;" src="{{asset('assets/img/img_matos_catego/' ~ matosCatego.matosCategoImage)}}" alt="{{matosCatego.matosCategoImageAlt}}">
-							<div class="card-body">
-								<h2 class="card-title">{{matosCatego.name}}</h2>
 
-								<p class="card-text">
-									<small class="text-muted">
-										<a href="{{ path('matos-categorie', {'id': matosCatego.id}) }}">{{matosCatego.name}}</a>
-									</small>
-								</p>
+						<a class="service-card" href="{{ path('matos-categorie', {'id': matosCatego.id}) }}">
+
+							<div class="service-card-img">
+								<img class="service-img" src="{{asset('assets/img/img_matos_catego/' ~ matosCatego.matosCategoImage)}}" alt="Card image cap">
 							</div>
-						</div>
+							<div class="service-card-body">
+								<div class="designed-back">
+									<div>{{matosCatego.name}}</div>
+								</div>
+								<p class="service-card-text"></p>
+							</div>
+
+
+						</a>
 					{% endif %}
 				{% endfor %}
 
 			</section>
-
 		{% endif %}
-
-		<section class="container">
-		{{render(controller(
+		<section id="contact" class="contact-form">
+			<div id="dropRight" class="form">
+				{{render(controller(
 			'App\\Controller\\ContactController::contact'))
 			}}
+			</div>
+			<button id="btn-drop" onclick="myFunction()" class="btn-drop">Contact</button>
 		</section>
-
 	</main>
-
+	<script>
+		function myFunction() {
+document.getElementById("dropRight").classList.toggle("show");
+}
+window.onclick = function (event) {
+if (! event.target.matches('.btn-drop')) {
+var dropdowns = document.getElementsByClassName("form");
+var i;
+for (i = 0; i < dropdowns.length; i++) {
+var openDropdown = dropdowns[i];
+if (openDropdown.classList.contains('show')) {
+openDropdown.classList.remove('show');
+}
+}
+}
+}
+	</script>
 {% endblock %}

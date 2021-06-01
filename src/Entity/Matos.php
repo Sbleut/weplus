@@ -58,6 +58,11 @@ class Matos
      */
     private $accessoires = [];
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $detail;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +160,18 @@ class Matos
     public function setAccessoires(?array $accessoires): self
     {
         $this->accessoires = $accessoires;
+
+        return $this;
+    }
+
+    public function getDetail(): ?string
+    {
+        return $this->detail;
+    }
+
+    public function setDetail(?string $detail): self
+    {
+        $this->detail = $detail;
 
         return $this;
     }

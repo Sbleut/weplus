@@ -1,10 +1,11 @@
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{% endblock %}
+{% block title %}Votre agence de communication audiovisuelle.
+{% endblock %}
 
 {% block stylesheets %}
+	{{ parent() }}
 	<link rel="stylesheet" href="{{asset('styles/css/home.css')}}">
-
 {% endblock %}
 
 {% block javascripts %}{% endblock %}
@@ -19,20 +20,21 @@
 		<section class="home-body d-flex justify-content-around flex-wrap">
 			{% for categorie in categories %}
 
-				<div class="home-card" id="number{{ loop.index }}">
+				<a class="home-link" id="number{{ loop.index }}" href="{{ path('services', {'id': categorie.id}) }}">
 					<div class="home-card-img">
 						<img src="{{asset('assets/img/img_catego/' ~ categorie.ImageCatego)}}" alt="{{categorie.ImageCategoAlt}}">
+						<div class="home-card" >
+							<div class="home-card-body">
+								<h2 class="home-card-title">{{categorie.title}}</h2>
+								<p class="home-card-text">{{categorie.subtitle}}</p>
+								<p class="home-card-text">
+									<small class="home-card-link"></small>
+								</p>
+							</div>
+						</div>
 					</div>
-					<div class="home-card-body">
-						<h2 class="home-card-title">{{categorie.title}}</h2>
-						<p class="home-card-text">{{categorie.subtitle}}</p>
-						<p class="home-card-text">
-							<small class="home-card-link">
-								<a href="{{ path('services', {'id': categorie.id}) }}">{{categorie.title}}</a>
-							</small>
-						</p>
-					</div>
-				</div>
+
+				</a>
 
 			{% endfor %}
 		</section>

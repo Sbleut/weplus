@@ -1,0 +1,47 @@
+<html>
+{% apply inline_css(source('@styles/email.css')) %}
+{% if email.image is defined %}
+{% set logo = email.image('@img/logo_weplus.png') %}
+{% else %}
+{% set logo = asset('assets/img/logo_weplus.png')%}
+{% endif %}
+
+	<body>
+		<header>
+			<div id="Weplus">
+				<img id="logo" src="{{ logo }}">
+				<p>31 boulevard Preuilly 37000 - TOURS</p>
+				<p>Siret : 84114424900023</p>
+				<h3>Weplus</h3>
+				<p>tél. : 09 75 50 52 35 </p>
+				<p>Email : contact@weplus.fr </p>
+				<p>Site web : http://www.weplus.fr
+				</p>
+			</div>
+			<div id="client">
+				<h3>Nom : {{data.nom}}</h3>
+				<h3>Entreprise : {{data.entreprise}}</h3>
+				<p>Email : {{data.email}}</p>
+			</div>
+			<div id="Prise de contact">
+			<h1>Prise de contact</h1>
+			<p>Date : {{date()|date('d/m/y')}}</p>
+			<p>Objet : {{data.objet}}</p>
+			</div>
+		</header>
+
+		<main>
+			<h3>Message envoyé par  {{data.nom}}</h3>
+
+			<p>{{data.message}}</p>
+			
+			</section>
+			
+
+		</main>
+		<footer>
+			<p>SCOP SARL WEPLUS - 31 BOULEVARD PREUILLY 37000 TOURS - Code NAF (APE) 7021Z - N° RCS 841144249 - Tours - SCOP au capital variable de 36050 € - Siret: 84114424900023</p>
+		</footer>
+	</body>
+	{% endapply %}
+</html>

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 class EntrepriseController extends AbstractController
 {
@@ -148,6 +149,13 @@ class EntrepriseController extends AbstractController
         $entreprise = $repo->find($id);
 
         if (empty($entreprise)) throw new NotFoundHttpException();
+
+        $oldImage = $entreprise->getLogo();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('entreprise_logo_directory'), $oldImage);
+
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($entreprise);

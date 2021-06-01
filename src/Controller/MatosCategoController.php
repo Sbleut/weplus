@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 class MatosCategoController extends AbstractController
 {
@@ -155,6 +156,13 @@ class MatosCategoController extends AbstractController
         $matosCatego = $repo->find($id);
 
         if (empty($matosCatego)) throw new NotFoundHttpException();
+
+        $oldImage = $matosCatego->getMatosCategoImage();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('matos_catego_image_directory'), $oldImage);
+
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($matosCatego);

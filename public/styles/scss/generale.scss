@@ -1,5 +1,80 @@
-*{
-    margin:0;
+@font-face {
+    font-family: "Monserrat-semi-bold";
+    src: url("../../assets/fonts/Montserrat-SemiBold.ttf") format("ttf");
+}
+@font-face {
+    font-family: "Raleway";
+    src: url("../../assets/fonts/Raleway-Bold.ttf");
+    src: url("../../assets/fonts/Raleway-Bold.ttf") format("ttf"),
+        url("../../assets/fonts/Raleway-Bold.woff") format("woff");
+}
+* {
+    margin: 0;
     padding: 0;
-    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    position: relative;
+    .logo {
+        width: 150px;
+        height: auto;
+    }
+    nav {
+        width: 100%;
+        position: fixed;
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+        z-index: 3;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        a {
+            color: white;
+            font-family: "Raleway", "Monserrat-semi-bold", "Monserrat";
+        }
+        img {
+            width: 150px;
+            height: auto;
+        }
+    }
+    .contact-form {
+        position: fixed;
+        display: flex;
+        background-color: transparent;
+        left: 0;
+        top: 30vh;
+        transition: transform 1s;
+        .form {
+            display: none;
+            background-color: #00c07b;
+            padding: 2rem;
+            transition: display 1s;
+        }
+        .show {
+            display: block;
+        }
+        .btn-drop {
+            height: 20%;
+            color: white;
+            padding: 0.5rem;
+            background-color: #00c07b;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            border-style: none;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+    }
+    footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 20vh;
+        .reso {
+            display: flex;
+            width: 40%;
+            justify-content: space-between;
+        }
+    }
 }

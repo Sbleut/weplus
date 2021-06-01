@@ -1,3 +1,16 @@
 {% block body %}
-{{ form( form, {'action': path('handlecontact')}) }}
+
+{{ form_start( form, {'action': path('contact')}) }}
+    {{form_row(form.nom)}}
+    {{form_row(form.entreprise)}}
+    {{form_row(form.email)}}
+    {{form_row(form.service)}}
+    {{form_row(form.objet)}}
+    {{form_row(form.message)}}
+
+    {{form_row(form.submit)}}
+{{ form_end(form)}}
+
+
+
 {% endblock %}

@@ -25,14 +25,105 @@ class ContactController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(): Response
+    public function contact(Request $r, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ContactType::class);
 
-        // J'affiche la vue du formulaire
-        return $this->render('/layout/_contact.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        $form->handleRequest($r);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+
+            // J'affiche la vue du formulaire
+            return $this->render('/layout/_contact.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+
+            $data = $form->getData();
+            $message = nl2br($data['message'], false);
+            $data['message'] = $message;
+
+            switch ($data['service']) {
+                case 'audiovisuel':
+                    $mail = (new TemplatedEmail())
+                        ->from(Address::create('<thomas@weplus.fr>'))
+                        ->to('business@weplus.fr')
+                        ->replyTo($data['email'])
+                        ->subject($data['objet'])
+                        ->htmlTemplate('mail-business.html.twig')
+                        ->context([
+                            'data' => $data,
+                        ]);
+
+
+                    $mailer->send($mail);
+
+                    break;
+                case 'photographie':
+                    $mail = (new TemplatedEmail())
+                        ->from(Address::create('<thomas@weplus.fr>'))
+                        ->to('business@weplus.fr')
+                        ->replyTo($data['email'])
+                        ->subject($data['objet'])
+                        ->htmlTemplate('mail-business.html.twig')
+                        ->context([
+                            'data' => $data,
+                        ]);
+
+
+                    $mailer->send($mail);
+
+                    break;
+                case 'digital':
+                    $mail = (new TemplatedEmail())
+                        ->from(Address::create('<thomas@weplus.fr>'))
+                        ->to('business@weplus.fr')
+                        ->replyTo($data['email'])
+                        ->subject($data['objet'])
+                        ->htmlTemplate('mail-business.html.twig')
+                        ->context([
+                            'data' => $data,
+                        ]);
+
+
+                    $mailer->send($mail);
+
+                    break;
+                case 'formation':
+                    $mail = (new TemplatedEmail())
+                        ->from(Address::create('<thomas@weplus.fr>'))
+                        ->to('formation@weplus.fr')
+                        ->replyTo($data['email'])
+                        ->subject($data['objet'])
+                        ->htmlTemplate('devis-variable.html.twig')
+                        ->context([
+                            'data' => $data,
+                        ]);
+
+
+                    $mailer->send($mail);
+
+                    break;
+                case 'recrutement':
+                    $mail = (new TemplatedEmail())
+                        ->from(Address::create('<thomas@weplus.fr>'))
+                        ->to('recrutement@weplus.fr')
+                        ->replyTo($data['email'])
+                        ->subject($data['objet'])
+                        ->htmlTemplate('devis-variable.html.twig')
+                        ->context([
+                            'data' => $data,
+                        ]);
+
+
+                    $mailer->send($mail);
+
+                    break;
+                default:
+                            echo 'ERROR';
+            }
+            return $this->redirect('/accueil');
+        }
     }
 
 

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 class CausesController extends AbstractController
 {
@@ -166,6 +167,12 @@ class CausesController extends AbstractController
         $cause = $repo->find($id);
 
         if (empty($cause)) throw new NotFoundHttpException();
+
+        $oldImage = $cause->getImageCause();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('cause_image_directory'), $oldImage);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($cause);

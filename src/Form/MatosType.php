@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,6 +38,16 @@ class MatosType extends AbstractType
                     ])
                 ]
             ])
+            ->add('detail', TextareaType::class, [
+                'attr' => [
+                    'maxlength' => '2047'
+                ],
+                'constraints' => [
+                    new Length([
+                        'max' => 2047
+                    ])
+                ]
+            ])
             ->add('stock', IntegerType::class, [
                 'attr' => [
                     'max' => 255
@@ -55,7 +66,7 @@ class MatosType extends AbstractType
             ])
             ->add('caution', IntegerType::class, [
                 'attr' => [
-                    'max' => 255
+                    'max' => 50000
                 ],
                 'constraints' => [
                     new NotBlank(),
@@ -93,6 +104,7 @@ class MatosType extends AbstractType
                 ]
             ])
             ->add('matos_image_alt', TextType::class, [
+                'label' => 'description de l\'image',
                 'attr' => [
                     'maxlength' => '255'
                 ],

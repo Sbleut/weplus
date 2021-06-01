@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 class CategorieController extends AbstractController
 {
@@ -152,6 +153,13 @@ class CategorieController extends AbstractController
         $categorie = $repo->find($id);
 
         if (empty($categorie)) throw new NotFoundHttpException();
+
+        $oldImage = $categorie->getImageCatego();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('categorie_image_directory'), $oldImage);
+
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($categorie);

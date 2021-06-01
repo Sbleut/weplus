@@ -14,7 +14,6 @@
 				<th>matos</th>
 				<th>Prix</th>
 				<th>Accessoires</th>
-				<th>Quantité</th>
 				<th>Total</th>
 				<th>Actions</th>
 			</tr>
@@ -26,15 +25,16 @@
 					<td class="text-end">{{ element.matos.prixht }}
 						€</td>
 					<td>
+					{% set prixAcce = 0 %}
 						{% for a in element.accessoires %}
 							{{a.nameMatos}}
 							à
 							{{a.prixht}}
 							€
+							{% set prixAcce =+ a.prixht %}
 						{% endfor %}
 					</td>
-					<td></td>
-					<td class="text-end">{{ element.matos.prixht }}
+					<td class="text-end">{{ element.matos.prixht + prixAcce }}
 						€</td>
 					<td>
 						<form action="{{path("panier-ajout")}}" method="post">

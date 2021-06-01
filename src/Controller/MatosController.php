@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 class MatosController extends AbstractController
 {
@@ -68,7 +69,7 @@ class MatosController extends AbstractController
             $em->persist($matos);
             $em->flush();
 
-            return $this->redirect('/accueil');
+            return $this->redirect('/admin/gerer/matos');
         }
     }
 
@@ -210,10 +211,17 @@ class MatosController extends AbstractController
 
         if (empty($matos)) throw new NotFoundHttpException();
 
+        $oldImage = $matos->getMatosImage();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('matos_image_directory'), $oldImage);
+
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($matos);
         $em->flush();
 
-        return $this->redirectToRoute('gerer_matoss');
+        return $this->redirectToRoute('gerer-matos');
     }
 }

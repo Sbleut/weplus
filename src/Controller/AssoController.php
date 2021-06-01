@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 class AssoController extends AbstractController
 {
@@ -158,6 +159,12 @@ class AssoController extends AbstractController
         $asso = $repo->find($id);
 
         if (empty($asso)) throw new NotFoundHttpException();
+
+        $oldImage = $asso->getAssoImage();
+
+        $filesystem = new Filesystem();
+
+        $filesystem->remove($this->getParameter('asso_image_directory'), $oldImage);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($asso);

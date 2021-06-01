@@ -39,6 +39,24 @@ class StaticController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/mail", name="mail")
+     */
+    public function mail(): Response
+    {
+        $data = [
+            'email' => 'thomas.sublet@gmail.com',
+            'nom' => 'Sublet',
+            'objet' => 'Audiovisuel',
+            'message' =>'Hello World',
+
+        ];
+
+        return $this->render('mail-business.html.twig', [
+            'data' => $data,
+        ]);
+    }
+
 
     /**
      * @Route("/accueil/admin", name="admin")
@@ -52,6 +70,18 @@ class StaticController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("/mentions/legales", name="mentions-legales")
+     * 
+     */        
+    public function mentionsLegales(): Response
+    {
+
+        return $this->render('mentions-legales.html.twig', [
+            
         ]);
     }
 
