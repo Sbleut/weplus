@@ -65,6 +65,17 @@ body {
             border-bottom-right-radius: 1rem;
         }
     }
+
+    .cookie-legacy {
+        position: absolute;
+        top: 95vh;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .hide {
+        display: none;
+    }
+
     footer {
         display: flex;
         flex-direction: column;

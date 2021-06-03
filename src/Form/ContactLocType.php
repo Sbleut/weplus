@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -34,7 +35,9 @@ class ContactLocType extends AbstractType
             ->add('ville', TextType::class)
             ->add('cp', NumberType::class, [
                 'constraints' => [
-                    new Length(),
+                    new Length([
+                        'max' => 5
+                    ]),
                 ]
             ])
             ->add('adresse', TextType::class)
@@ -47,8 +50,11 @@ class ContactLocType extends AbstractType
                 ]
             ])
             ->add('hstart', ChoiceType::class, [
-                'matin' => 'matin',
-                'après-midi' => 'après-midi',
+                'label' => 'heure de retrait du matériel',
+                'choices' => [
+                    'matin 10h 12h' => 'matin',
+                    'après-midi 16h 18h' => 'après-midi',
+                ]
             ])
             ->add('end', DateType::class, [
                 'widget' => 'choice',
@@ -59,8 +65,11 @@ class ContactLocType extends AbstractType
                 ]
             ])
             ->add('hend', ChoiceType::class, [
-                'matin' => 'matin',
-                'après-midi' => 'après-midi',
+                'label' => 'heure de retour du matériel',
+                'choices' => [
+                    'matin 10h 12h' => 'matin',
+                    'après-midi 16h 18h' => 'après-midi',
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer'

@@ -65,6 +65,15 @@ body .contact-form .btn-drop {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
+body .cookie-legacy {
+  position: absolute;
+  top: 95vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+body .hide {
+  display: none;
+}
 body footer {
   display: flex;
   flex-direction: column;
