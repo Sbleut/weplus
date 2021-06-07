@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+
 
 class CookieController extends AbstractController
 {
@@ -21,7 +24,7 @@ class CookieController extends AbstractController
         if (empty($_COOKIE['visited'])) {
 
                 $response = new Response();
-                $response->headers->setCookie(new Cookie('visited', 'hide', time() + (365 * 24 * 60 * 60)));
+                $response->headers->setCookie(new Cookie('visited', 'hide', time() + (365 * 24 * 60 * 60), '/', null, null, true,false, 'lax'));
                 $response->sendHeaders();            
 
             return $this->redirectToRoute("accueil");

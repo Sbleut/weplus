@@ -14,12 +14,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email as MimeEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ * 
+ * @IsGranted("ROLE_USER")
+ */
 class ContactController extends AbstractController
 {
     /**
@@ -120,7 +126,7 @@ class ContactController extends AbstractController
 
                     break;
                 default:
-                            echo 'ERROR';
+                    echo 'ERROR';
             }
             return $this->redirect('/accueil');
         }
@@ -131,7 +137,7 @@ class ContactController extends AbstractController
      * 
      * 
      */
-    public function handleContact(Request $r, MailerInterface $mailer, PanierService $panierService)
+    public function handleContact(Request $r, MailerInterface $mailer, PanierService $panierService, Session $session)
     {
 
         // Service Location de matériel Mailing distribution
@@ -164,6 +170,15 @@ class ContactController extends AbstractController
 
 
             $mailer->send($mail);
+
+            // add flash messages
+            $session->getFlashBag()->add(
+                'Notification',
+                'Votre demande a bien été prise en compte !'
+            );
+            foreach ($session->getFlashBag()->get('notification', []) as $message) {
+                echo '<div class="flash-warning">'.$message.'</div>';
+            }
 
             return $this->redirect('/accueil');
         }

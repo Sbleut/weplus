@@ -30,7 +30,7 @@
 				<thead>
 					<tr>
 						<th>Libellé</th>
-						<th>Qte</th>
+						<th>caution</th>
 						<th>Unité</th>
 						<th>PU HT</th>
 						<th>Montant HT</th>
@@ -41,15 +41,15 @@
 					{% for element in dataPanier %}
 					<tr>
 						<td>{{ element.matos.nameMatos}}</td>
-						<td>{{element.quantite}}</td>
+						<td>{{element.matos.caution}}</td>
 						<td>
 						{% for a in element.accessoires %}
 							{{a.nameMatos}}
 						{% endfor %}
 						</td>
 						<td>{{element.matos.prixht}} €</td>
-						<td>{{(element.matos.prixHT)*(element.quantite)}}</td>
-						<td>O,OO%</td>
+						<td>{{(element.matos.prixHT)}}</td>
+						<td>2O,OO%</td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -89,7 +89,7 @@
 						</tr>
 						<tr>
 							<td>Total TTC</td>
-							<td>{{total}}</td>
+							<td>{{total * 1.2}}</td>
 						</tr>
 					</table>
 				</div>

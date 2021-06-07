@@ -1,8 +1,17 @@
 {% set route = app.request.get('_route') %}
 
 			{% for categorie in categories %}
+
+
 				<a class="nav-link" href="{{ path('services', {'id': categorie.id}) }}">{{categorie.title}}</a>
 				{#<a class="nav-link" href="{{ path('gerer-profil') }}">Gérer project</a>#}
 			{% endfor %}
+
+			<a id="cart" class="nav-link" href="{{ path('panier')}}">
+			{% if  app.session.get('panier')|length >= 1 %}
+			<p>{{app.session.get('panier')|length}}</p>
+			{% endif %}
+			<i class="bi bi-cart"></i>
+			</a>
 	
 

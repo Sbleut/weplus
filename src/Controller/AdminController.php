@@ -11,10 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * 
+ * @IsGranted("ROLE_USER")
+ */
+
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/create/admin", name="create_admin")
+     * @Route("/create/admin", name="create-admin")
      * 
      * @IsGranted("ROLE_ADMIN")
      * 
@@ -44,6 +49,37 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/admin/edit/{id}", name="admin_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, UserPasswordEncoderInterface $encoder, Admins $admin): Response {
+        $oldPassword = $admin->getPassword();
+
+        $form = $this->createForm(AdminType::class, $admin);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!empty($admin->getPassword())) {
+                $encodedPassword = $encoder->encodePassword($admin, $admin->getPassword());
+                $admin->setPassword($encodedPassword);
+            } else {
+                $admin->setPassword($oldPassword);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($admin);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('gerer-admin');
+        }
+
+        return $this->render('admin/edit.html.twig', [
+            'admin' => $admin,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
      * @Route("/admin/gerer/admin", name="gerer-admin")
      * 
      * @IsGranted("ROLE_ADMIN") 
@@ -53,7 +89,7 @@ class AdminController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Admins::class);
         $admins = $repository->findAll();
 
-        return $this->render('admin/gerer-categorie.html.twig', [
+        return $this->render('admin/gerer-admins.html.twig', [
             'admins' => $admins
         ]);
     }

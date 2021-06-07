@@ -36,20 +36,20 @@
 			<a class="nav-link " href="{{ path('concept') }}">Le Concept</a>
 			{% set chemin = app.request.uri %}
 			{% if 'admin' in chemin %}
-				<a class="nav-link text-success" href="{{ path('gerer-categorie') }}">Les catégories de services</a>
-				<a class="nav-link text-success" href="{{ path('gerer-services') }}">Les Services</a>
-				<a class="nav-link text-success" href="{{ path('gerer-matos-categorie') }}">Les catégorie de matériel</a>
-				<a class="nav-link text-success" href="{{ path('gerer-matos') }}">Le matériel à louer</a>
-				<a class="nav-link text-success" href="{{ path('gerer-cause') }}">Les causes défendues par Weplus</a>
-				<a class="nav-link text-success" href="{{ path('gerer-asso') }}">Les associations partenaires</a>
-				<a class="nav-link text-success" href="{{ path('gerer-entreprise') }}">Les entreprises partenaire</a>
-				<a class="nav-link text-success" href="{{ path('app_logout') }}">Log out</a>
+				<a class="nav-link " href="{{ path('gerer-categorie') }}">Les catégories de services</a>
+				<a class="nav-link " href="{{ path('gerer-services') }}">Les Services</a>
+				<a class="nav-link " href="{{ path('gerer-matos-categorie') }}">Les catégorie de matériel</a>
+				<a class="nav-link " href="{{ path('gerer-matos') }}">Le matériel à louer</a>
+				<a class="nav-link " href="{{ path('gerer-cause') }}">Les causes défendues par Weplus</a>
+				<a class="nav-link " href="{{ path('gerer-asso') }}">Les associations partenaires</a>
+				<a class="nav-link " href="{{ path('gerer-entreprise') }}">Les entreprises partenaire</a>
+				<a class="nav-link " href="{{ path('app_logout') }}">Log out</a>
 
 			{% else %}
 				{{ render(controller('App\\Controller\\CategorieController::retrieveAll'))}}
 			{% endif %}
 		</nav>
-
+		
 
 		{% block body %}{% endblock %}
 

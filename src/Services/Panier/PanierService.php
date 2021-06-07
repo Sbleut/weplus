@@ -24,6 +24,7 @@ class PanierService {
         // On "fabrique" les données
         $dataPanier = [];
         $total = 0;
+        $totalCaution = 0;
         $totalAccessoire = 0;
         
 
@@ -45,9 +46,10 @@ class PanierService {
                 "matos" => $matos,
                 "accessoires" => $accessoires
             ];
+            $totalCaution += $matos->getCaution();
             $total += ($matos->getPrixHt() + $totalAccessoire);
         }
 
-        return [$dataPanier, $total];
+        return [$dataPanier, $total, $totalCaution];
     }
 }

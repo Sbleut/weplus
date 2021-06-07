@@ -4,71 +4,89 @@
 {% endblock %}
 
 {% block body %}
-	<section class="bg-light p-3">
-		<h1>Votre panier</h1>
-	</section>
+	<main>
+		<section class="bg-light p-3">
+			<h1>Votre panier</h1>
+		</section>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>matos</th>
-				<th>Prix</th>
-				<th>Accessoires</th>
-				<th>Total</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for element in dataPanier %}
+		<table class="table">
+			<thead>
 				<tr>
-					<td>{{ element.matos.nameMatos }}</td>
-					<td class="text-end">{{ element.matos.prixht }}
-						€</td>
-					<td>
-					{% set prixAcce = 0 %}
-						{% for a in element.accessoires %}
-							{{a.nameMatos}}
-							à
-							{{a.prixht}}
-							€
-							{% set prixAcce =+ a.prixht %}
-						{% endfor %}
-					</td>
-					<td class="text-end">{{ element.matos.prixht + prixAcce }}
-						€</td>
-					<td>
-						<form action="{{path("panier-ajout")}}" method="post">
-							
+					<th>matos</th>
+					<th>Prix</th>
+					<th>Accessoires</th>
+					<th>Caution</th>
+					<th>Total</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if dataPanier %}
+					{% for element in dataPanier %}
+						<tr>
+							<td>{{ element.matos.nameMatos }}</td>
+							<td class="text-end">{{ element.matos.prixht }}
+								€</td>
+							<td>
+								{% set  prixAcce = 0 %}
+								{% for a in element.accessoires %}
+									{{a.nameMatos}}
+									à
+									{{a.prixht}}
+									€
+								</br>
+								{% set  prixAcce = prixAcce + a.prixht %}
+								{% endfor %}			
+							</td>
+							<td>{{element.matos.caution}}</td>
+							<td class="text-end">{{ element.matos.prixht + prixAcce }} €</td>
+							<td>
+								<form action="{{path("panier-ajout")}}" method="post">
+
 								<input name="matoId" type="hidden" value="{{element.matos.id}}">
 								<div class="input-group">
-								<button type="submit" class="btn btn-primary">
-								<i class="bi bi-cart-plus "></i>
-								</button>
+									<button type="submit" class="btn btn-primary">
+									<i class="bi bi-cart-plus "></i>
+									</button>
 								</div>
-							
-						</form>
-						<a href="{{path("panier-delete", {id: loop.index0 })}}" class="btn btn-danger">
+								</form>
+								<a href="{{path("panier-delete", {id: loop.index0 })}}" class="btn btn-danger">
+								<i class="bi bi-cart-x"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+					<td colspan="5" class="text-center">Votre panier est vide</td>
+					</tr>
+				{% endif %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3">Total HT</td>
+					<td>{{totalCaution}}</td>
+					<td class="text-end">{{ total }} €</td>
+					<td>
+						<a href="{{path("panier-delete-all")}}" class="btn btn-danger">
 							<i class="bi bi-cart-x"></i>
 						</a>
 					</td>
 				</tr>
-			</td>
-		</tbody>
-	</tr>
-{% else %}
-	<tr>
-		<td colspan="5" class="text-center">Votre panier est vide</td>
-	</tr>
-{% endfor %}</tbody><tfoot>
-<tr>
-	<td colspan="3">Total HT
-	</td>
-	<td class="text-end">{{ total }}
-		€</td>
-	<td>
-		<a href="{{path("panier-delete-all")}}" class="btn btn-danger">
-			<i class="bi bi-cart-x"></i>
-		</a>
-	</td>
-</tr></tfoot></table><div class="container">{{ form(form, {'action': path('handlecontact')}) }}
-</div>{% endblock %}
+				<tr>
+					<td colspan="3">Total TTC</td>
+					<td>{{totalCaution}}</td>
+					<td class="text-end">{{ total * 1.20 }} €</td>
+					<td>
+						<a href="{{path("panier-delete-all")}}" class="btn btn-danger">
+							<i class="bi bi-cart-x"></i>
+						</a>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="container">
+		{{ form(form, {'action': path('handlecontact')}) }}
+		</div>
+	</main>
+{% endblock %}

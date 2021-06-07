@@ -1,8 +1,10 @@
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{% endblock %}
+{% block title %}{{mato.nameMatos}}{% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('styles/css/matos.css')}}">
+{% endblock %}
 
 {% block javascripts %}{% endblock %}
 
@@ -14,30 +16,31 @@
 		</section>
 
 		<section class="container">
-			<div class="card mb-3">
-				<img class="card-img-top" src="{{asset('assets/img/img_matos/' ~ mato.matosImage)}}" alt="{{mato.MatosImageAlt}}">
-				<div class="card-body">
-					<h2 class="card-title">{{mato.nameMatos}}</h2>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					<p class="card-text">
+			<div class="matos-card mb-3">
+				<img class="matos-card-img" src="{{asset('assets/img/img_matos/' ~ mato.matosImage)}}" alt="{{mato.MatosImageAlt}}">
+				<div class="matos-card-body">
+					<h2 class="matos-card-title">{{mato.nameMatos}}</h2>
+					<p class="matos-card-text">{{mato.detail}}</p>
+					<p class="matos-card-text">
 						<small class="text-muted">
 							<a href="{{ path('matos', {'id': mato.id}) }}">{{mato.nameMatos}}</a>
 						</small>
 					</p>
 				</div>
-				<div class="container">
-				<form action="{{path("panier-ajout")}}" method="post">					
+				<div class="matos-accessoires">
+					<form action="{{path("panier-ajout")}}" method="post">
 						{% for a in accessoires %}
-						
-							<input name="accessoires" class="btn btn-success" type="checkbox" value="{{a.id}}">
-							<h3>{{a.nameMatos}}</h3>
-							<img class="card-img" style="width:auto; height:150px;" src="{{asset('assets/img/img_matos/' ~ a.matosImage)}}" alt="{{mato.MatosImageAlt}}">
-										
-						{% endfor %}						
+							<div class="accessoire-body">
+								<input id="checkbox{{loop.index}}" name="accessoires[]" class="accessoire-input" type="checkbox" value="{{a.id}}">
+								<label for="checkbox{{loop.index}}"><img class="accessoire-img"src="{{asset('assets/img/img_matos/' ~ a.matosImage)}}" alt="{{mato.MatosImageAlt}}">
+								<h3>{{a.nameMatos}}</h3></label>
+							</div>
+
+						{% endfor %}
 						<input name="matoId" type="hidden" value="{{mato.id}}">
-						<input type="submit" value="Ajouter au panier">
-				</form>
-					
+						<input class="panier" type="submit" value="Ajouter au panier">
+					</form>
+
 				</div>
 			</div>
 		</section>

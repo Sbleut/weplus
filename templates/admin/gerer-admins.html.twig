@@ -26,19 +26,25 @@
 					<tr>
 						<td>{{ a.id }}</td>
 						<td>{{ a.email }}</td>
-				
+
 						<td>
-							
-						</td>
+							<a href="{{ path( 'delete-admin', {'id': a.id} ) }}" title="Supprimer ce comtpe" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+								<i class="fas fa-trash"></i>
+							</a>
+							<a href="{{ path('edit-admin', {'id': a.id}) }}" title="Modifier ce compte" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+						</td>			
+						
 					</tr>
 				{% else %}
-					<tr>Il n'y a aucun asso à afficher.</tr>
+					<tr>Il n'y a aucun admin à afficher.</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 
 		<a href="{{ path('create-admin') }}" class="btn btn-success">
-			<i class="fas fa-plus mr-4"></i>Créer un asso</a>
+			<i class="fas fa-plus mr-4"></i>Créer un compte admin</a>
 
 	</div>
 {% endblock %}

@@ -11,7 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+/**
+ * 
+ * @IsGranted("ROLE_USER")
+ */
 class PanierController extends AbstractController
 {
     /**
@@ -23,12 +29,15 @@ class PanierController extends AbstractController
 
         $total = $panierService->getPanier()[1];
 
+        $totalCaution = $panierService->getPanier()[2];
+
         $form = $this->createForm(ContactLocType::class);
 
 
         return $this->render('panier.html.twig', [
             'dataPanier' => $dataPanier,
             'total' => $total,
+            'totalCaution' => $totalCaution, 
             'form' => $form->createView(),
         ]);
     }
@@ -62,9 +71,10 @@ class PanierController extends AbstractController
             $matosNumber = 0;
         }
 
-        $accessoires_id = null;
+        $accessoires_id = null;      
+        
 
-        $accessoires_id[] = $r->request->get('accessoires');
+        $accessoires_id = $_POST['accessoires'];
 
         $panier = $session->get("panier", [$matosNumber => [
             'id' => $id,

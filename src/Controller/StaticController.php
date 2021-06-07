@@ -9,10 +9,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * 
+ * @IsGranted("ROLE_USER")
+ */
 class StaticController extends AbstractController
 {
     /**
-     * @Route("/accueil", name="accueil")
+     * @Route("/accueil", name="accueil") 
+     * 
      */
     public function index(): Response
     {

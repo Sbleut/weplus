@@ -2,7 +2,9 @@
 
 {% block title %}{% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('styles/css/matoscatego.css')}}">
+{% endblock %}
 
 {% block javascripts %}{% endblock %}
 
@@ -13,23 +15,27 @@
 			<p>Communiquer par des vidéos est le meilleur moyen pour toucher rapidement une nouvelle clientèle. Nous vous proposons toute une gamme de service adapté de la consrtuction d'un site vitrine, à l'animation de réseaux sociaux.</p>
 		</section>
 
-			<section class="container">
+		<section class="container">
 
-				{% for mato in matos %}
-					<div class="card mb-3">
-						<img class="card-img-top" src="{{asset('assets/img/img_matos/' ~ mato.matosImage)}}" alt="{{mato.MatosImageAlt}}">
-						<div class="card-body">
-							<h2 class="card-title">{{mato.nameMatos}}</h2>
-							
-							<p class="card-text">
-								<small class="text-muted"><a href="{{ path('matos', {'id': mato.id}) }}">{{mato.nameMatos}}</a></small>
-							</p>
-						</div>
+			{% for mato in matos %}
+				<div class="service-card">
+					<div class="service-card-img">
+						<img class="service-img" src="{{asset('assets/img/img_matos/' ~ mato.matosImage)}}" alt="{{mato.MatosImageAlt}}">
 					</div>
+					<div class="service-card-body">
+						<h2 class="service- card-title">{{mato.nameMatos}}</h2>
 
-				{% endfor %}
+						<p class="service-card-text">
+							<small class="text-muted">
+								<a href="{{ path('matos', {'id': mato.id}) }}">{{mato.nameMatos}}</a>
+							</small>
+						</p>
+					</div>
+				</div>
 
-			</section>
+			{% endfor %}
+
+		</section>
 
 	</main>
 

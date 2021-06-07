@@ -15,9 +15,12 @@
 body {
   position: relative;
 }
+body main {
+  padding: 4rem;
+}
 body .logo {
   width: 150px;
-  height: auto;
+  height: 75%;
 }
 body nav {
   width: 100%;
@@ -36,6 +39,21 @@ body nav a {
 body nav img {
   width: 150px;
   height: auto;
+}
+body nav #cart {
+  position: relative;
+}
+body nav #cart p {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  width: 1rem;
+  height: 1rem;
+  background-color: #00c07b;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  text-align: center;
 }
 body .contact-form {
   position: fixed;
