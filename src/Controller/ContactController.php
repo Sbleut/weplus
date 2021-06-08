@@ -31,7 +31,7 @@ class ContactController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(Request $r, MailerInterface $mailer): Response
+    public function contact(Request $r, MailerInterface $mailer, Session $session): Response
     {
         $form = $this->createForm(ContactType::class);
 
@@ -128,6 +128,12 @@ class ContactController extends AbstractController
                 default:
                     echo 'ERROR';
             }
+
+            $session->getFlashBag()->add(
+                'Notification',
+                'Votre demande a bien été prise en compte !'
+            );
+
             return $this->redirect('/accueil');
         }
     }
@@ -156,11 +162,13 @@ class ContactController extends AbstractController
 
             $total = $panierService->getPanier()[1];
 
+            dd($data['start']);
+
             $mail = (new TemplatedEmail())
                 ->from(Address::create('<thomas@weplus.fr>'))
                 ->to('thomas.sublet@gmail.com')
                 ->replyTo($data['email'])
-                ->subject('test')
+                ->subject('Demande de Location')
                 ->htmlTemplate('devis-variable.html.twig')
                 ->context([
                     'data' => $data,
@@ -171,15 +179,11 @@ class ContactController extends AbstractController
 
             $mailer->send($mail);
 
-            // add flash messages
+            // Confirmation dans l'envoie du mail pour l'user
             $session->getFlashBag()->add(
                 'Notification',
                 'Votre demande a bien été prise en compte !'
             );
-            foreach ($session->getFlashBag()->get('notification', []) as $message) {
-                echo '<div class="flash-warning">'.$message.'</div>';
-            }
-
             return $this->redirect('/accueil');
         }
     }

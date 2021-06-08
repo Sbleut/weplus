@@ -20,7 +20,9 @@
 			</div>
 			<div id="client">
 				<h3>Nom : {{data.nom}}</h3>
+				{% if data.entreprise %}
 				<h3>Entreprise : {{data.entreprise}}</h3>
+				{% endif %}
 				<p>Email : {{data.email}}</p>
 			</div>
 			<div id="Prise de contact">
@@ -33,7 +35,7 @@
 		<main>
 			<h3>Message envoyé par  {{data.nom}}</h3>
 
-			<p>{{data.message}}</p>
+			<p>{{data.message|nl2br}}</p>
 			
 			</section>
 			

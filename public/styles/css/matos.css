@@ -41,6 +41,8 @@
   text-transform: none;
 }
 .container .matos-card .matos-card-body .matos-card-text {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 32px;
   color: #777;
   font-size: 15px;

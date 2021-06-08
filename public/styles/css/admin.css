@@ -1,0 +1,20 @@
+body main {
+  padding: 6rem;
+}
+body main table tbody tr .action-btn {
+  display: flex;
+}
+body main table tbody tr .action-btn .btn {
+  margin: 0.2rem;
+}
+body main table tbody tr .action-btn .btn-danger {
+  background-color: #c00000 !important;
+}
+body main table tbody tr .action-btn .btn-primary {
+  background-color: #009ac0 !important;
+}
+body main table tbody tr .action-btn .btn-info {
+  background-color: #0043c0 !important;
+}
+
+/*# sourceMappingURL=admin.css.map */

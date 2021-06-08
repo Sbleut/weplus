@@ -1,12 +1,3 @@
-@font-face {
-  font-family: "Monserrat-semi-bold";
-  src: url("../../assets/fonts/Montserrat-SemiBold.ttf") format("ttf");
-}
-@font-face {
-  font-family: "Raleway";
-  src: url("../../assets/fonts/Raleway-Bold.ttf");
-  src: url("../../assets/fonts/Raleway-Bold.ttf") format("ttf"), url("../../assets/fonts/Raleway-Bold.woff") format("woff");
-}
 * {
   margin: 0;
   padding: 0;
@@ -17,10 +8,30 @@ body {
 }
 body main {
   padding: 4rem;
+  font-family: "PT sans", sans-serif;
+}
+body #login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 body .logo {
   width: 150px;
-  height: 75%;
+  max-height: 75px;
+}
+body .flash {
+  position: absolute;
+  z-index: 5;
+  top: 30vh;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.514);
+  border-radius: 1rem;
+}
+body .btn {
+  color: white;
+  background-color: #00c07b;
 }
 body nav {
   width: 100%;
@@ -34,7 +45,7 @@ body nav {
 }
 body nav a {
   color: white;
-  font-family: "Raleway", "Monserrat-semi-bold", "Monserrat";
+  font-family: "PT sans", "Monserrat-semi-bold", "Monserrat";
 }
 body nav img {
   width: 150px;
@@ -83,11 +94,26 @@ body .contact-form .btn-drop {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
+body #locaform {
+  font-family: sans-serif;
+}
 body .cookie-legacy {
+  display: flex;
+  color: white;
+  justify-content: space-around;
   position: absolute;
-  top: 95vh;
+  padding: 0.5rem;
+  top: 93vh;
   width: 100%;
+  line-height: 1.5rem;
   background-color: rgba(0, 0, 0, 0.4);
+}
+body .cookie-legacy a {
+  padding: 0.2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  border-style: none;
+  max-height: 2rem;
 }
 body .hide {
   display: none;

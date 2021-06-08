@@ -198,7 +198,7 @@ class MatosController extends AbstractController
             $em->persist($matos);
             $em->flush();
 
-            return $this->redirect('/matos/' . $matos->getId());
+            return $this->redirect('gerer-matos');
         }
     }
 

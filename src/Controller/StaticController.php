@@ -41,6 +41,7 @@ class StaticController extends AbstractController
         return $this->render('devis-variable.html.twig', [
             'dataPanier' => $dataPanier,
             'total' => $total,
+            'email' => '/public/assets/img/logo_weplus.png',            
         ]);
     }
 
@@ -49,12 +50,14 @@ class StaticController extends AbstractController
      */
     public function mail(): Response
     {
+        
+
         $data = [
             'email' => 'thomas.sublet@gmail.com',
             'nom' => 'Sublet',
             'objet' => 'Audiovisuel',
-            'message' =>'Hello World',
-
+            'message' => "Hello World. \nI like <br>",
+            'entreprise' => 'Google'
         ];
 
         return $this->render('mail-business.html.twig', [

@@ -21,11 +21,14 @@
 				<div class="matos-card-body">
 					<h2 class="matos-card-title">{{mato.nameMatos}}</h2>
 					<p class="matos-card-text">{{mato.detail}}</p>
-					<p class="matos-card-text">
+					
+					<div class="matos-card-text">
 						<small class="text-muted">
 							<a href="{{ path('matos', {'id': mato.id}) }}">{{mato.nameMatos}}</a>
+							
 						</small>
-					</p>
+						<p>{{mato.prixht * 1.20}} € TTC</p>
+					</div>
 				</div>
 				<div class="matos-accessoires">
 					<form action="{{path("panier-ajout")}}" method="post">

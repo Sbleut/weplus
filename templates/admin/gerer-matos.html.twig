@@ -6,11 +6,14 @@
 {% block css %}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	</link> 
 	{{ parent() }}
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+
+
+	<main>
 
 		<a href="{{ path('create-matos') }}" class="btn btn-success">
 			<i class="fas fa-plus mr-4"></i>Créer un matos</a>
@@ -26,6 +29,7 @@
                     <th>caution</th>
                     <th>Catégorie de matériel</th>                    
                     <th>image_alt</th>
+					<th>Detail</th>
                     <th>accessoires</th>
 				</tr>
 			</thead>
@@ -42,6 +46,7 @@
                         <td>{{a.caution}}</td>
                         <td>{{a.matosCatego.name}}</td>
                         <td>{{a.matosImagealt}}</td>
+						<td>{{a.detail}}</td>
                         <td>
 						{% for b in a.accessoires %}
 							{% if b != null %}
@@ -50,7 +55,7 @@
                         {% endfor %}
                         </td>
 
-						<td>
+						<td class="action-btn">
 							<a href="{{ path( 'supprimer-matos', {'id': a.id} ) }}" title="Supprimer ce matos" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
 								<i class="fas fa-trash"></i>
 							</a>
@@ -71,7 +76,7 @@
 		<a href="{{ path('create-matos') }}" class="btn btn-success">
 			<i class="fas fa-plus mr-4"></i>Créer un matos</a>
 
-	</div>
+	</main>
 {% endblock %}
 
 

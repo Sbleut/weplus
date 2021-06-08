@@ -44,7 +44,10 @@ class ContactLocType extends AbstractType
             ->add('start', DateType::class, [
                 'widget' => 'choice',
                 // adds a class that can be selected in JavaScript
-                'attr' => ['class' => 'start'],
+                'attr' => ['class' => 'start'],                
+                'years' => range(date('Y'), date('Y')+5),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
                 'constraints' => [
                     new NotBlank(),
                 ]
@@ -60,6 +63,9 @@ class ContactLocType extends AbstractType
                 'widget' => 'choice',
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'end'],
+                'years' => range(date('Y'), date('Y')+5),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
                 'constraints' => [
                     new NotBlank(),
                 ]

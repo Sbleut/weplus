@@ -19,9 +19,25 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link
 		href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+		{# PT Sans BOLD #}
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link
+		href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&display=swap" rel="stylesheet">
+		{# PT Sans BOLD ITALIC #}
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link
+		href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
 
 		{#{{ encore_entry_link_tags('app') }}#}
-		<link rel="stylesheet" href="{{asset('styles/css/generale.css')}}"> {% block stylesheets %}{% endblock %}
+		<link rel="stylesheet" href="{{asset('styles/css/generale.css')}}">
+
+		{% set chemin = app.request.uri %}
+		{% if 'admin' in chemin %}
+		<link rel="stylesheet" href="{{asset('styles/css/admin.css')}}">
+		{% endif %}
+
+
+		{% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
 			{#{{ encore_entry_script_tags('app') }}#}
@@ -49,7 +65,17 @@
 				{{ render(controller('App\\Controller\\CategorieController::retrieveAll'))}}
 			{% endif %}
 		</nav>
-		
+
+		{% for type, messages in app.session.flashbag.all() %}
+			{% for message in messages %}
+				<div class="flash alert  flash-{{type}}">
+					<p>{{ message }}</p>
+				</div>
+
+			{% endfor %}
+
+		{% endfor %}
+
 
 		{% block body %}{% endblock %}
 
@@ -70,7 +96,6 @@
 			<p>Ce site utilise des cookies. En continuant à utiliser ce site, vous consentez à leur utilisation.</p>
 			<a href="{{ path('cookie-warning') }}">Ok</a>
 		</div>
-
 
 
 		<!-- JavaScript Bundle with Popper -->

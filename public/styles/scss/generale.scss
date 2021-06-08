@@ -1,27 +1,38 @@
-@font-face {
-    font-family: "Monserrat-semi-bold";
-    src: url("../../assets/fonts/Montserrat-SemiBold.ttf") format("ttf");
-}
-@font-face {
-    font-family: "Raleway";
-    src: url("../../assets/fonts/Raleway-Bold.ttf");
-    src: url("../../assets/fonts/Raleway-Bold.ttf") format("ttf"),
-        url("../../assets/fonts/Raleway-Bold.woff") format("woff");
-}
 * {
     margin: 0;
     padding: 0;
 }
 
 body {
-    main{
-        padding: 4rem;
-    }
     position: relative;
+    main{        
+        padding: 4rem;
+        font-family: 'PT sans', sans-serif;
+    }
+    #login{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }    
     .logo {
         width: 150px;
-        height: 75%;
+        max-height: 75px;
     }
+    .flash{
+        position: absolute;
+        z-index: +5;
+        top: 30vh;
+        display: flex;
+        justify-content: center;
+        color: white;
+        background-color: rgba(255, 255, 255, 0.514);
+        border-radius: 1rem;
+    }
+    .btn{
+        color: white;
+        background-color: #00c07b;        
+    }
+    
     nav {
         width: 100%;
         position: fixed;
@@ -33,7 +44,7 @@ body {
         color: white;
         a {
             color: white;
-            font-family: "Raleway", "Monserrat-semi-bold", "Monserrat";
+            font-family: "PT sans", "Monserrat-semi-bold", "Monserrat";
         }
         img {
             width: 150px;
@@ -83,12 +94,27 @@ body {
             border-bottom-right-radius: 1rem;
         }
     }
+    #locaform{
+        font-family: sans-serif;
+    }
 
     .cookie-legacy {
+        display: flex;
+        color: white;
+        justify-content: space-around;
         position: absolute;
-        top: 95vh;
+        padding: 0.5rem;
+        top: 93vh;
         width: 100%;
+        line-height: 1.5rem;
         background-color: rgba(0, 0, 0, 0.4);
+        a{
+            padding: 0.2rem;
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 0.5rem;
+            border-style: none;
+            max-height: 2rem; 
+        }
     }
     .hide {
         display: none;
