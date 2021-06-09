@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -42,12 +43,13 @@ class ContactLocType extends AbstractType
             ])
             ->add('adresse', TextType::class)
             ->add('start', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
                 // adds a class that can be selected in JavaScript
-                'attr' => ['class' => 'start'],                
-                'years' => range(date('Y'), date('Y')+5),
-                'months' => range(date('m'), 12),
-                'days' => range(date('d'), 31),
+                'attr' => [
+                    'class' => 'start',
+                    'min' => (new \DateTime())->format('d M Y'),
+                ],           
+                
                 'constraints' => [
                     new NotBlank(),
                 ]
@@ -60,12 +62,10 @@ class ContactLocType extends AbstractType
                 ]
             ])
             ->add('end', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'end'],
-                'years' => range(date('Y'), date('Y')+5),
-                'months' => range(date('m'), 12),
-                'days' => range(date('d'), 31),
+
                 'constraints' => [
                     new NotBlank(),
                 ]

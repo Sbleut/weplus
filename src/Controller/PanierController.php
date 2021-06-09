@@ -71,10 +71,13 @@ class PanierController extends AbstractController
             $matosNumber = 0;
         }
 
-        $accessoires_id = null;      
+             
         
-
+        if(!empty($_POST['accessoires'])) {
         $accessoires_id = $_POST['accessoires'];
+        } else {
+            $accessoires_id = null; 
+        }
 
         $panier = $session->get("panier", [$matosNumber => [
             'id' => $id,

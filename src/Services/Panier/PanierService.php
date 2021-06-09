@@ -31,6 +31,9 @@ class PanierService {
         foreach ($panier as $equipement => [ 'id' => $id, 'accessoires_id' => $accessoires_id]) {
             $matos = $this->matosRepository->find($id);
             $accessoires = null;
+            if($accessoires_id == null){
+                $accessoires_id[] = null;
+            }
             foreach ($accessoires_id as $acid) {
                 if (!empty($acid)) {
                     $accessoire = $this->matosRepository->find($acid);
