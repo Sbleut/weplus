@@ -6,6 +6,7 @@ use App\Form\ContactLocType;
 use App\Form\ContactType;
 use App\Repository\MatosRepository;
 use App\Services\Panier\PanierService;
+use DateTime;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -161,8 +162,62 @@ class ContactController extends AbstractController
             $dataPanier = $panierService->getPanier()[0];
 
             $total = $panierService->getPanier()[1];
+            
+            
 
-            dd($data['start']);
+            $$nbJour = (date_timestamp_get($data['end']) - date_timestamp_get($data['start']))/ (60 * 60 * 24);
+
+            if ($$nbJour >= 14){
+                $nbJour = (($nbJour-13) * 0.2) + 5;
+            }	else{
+                switch ($nbJour) {
+                    case 0:
+                    $nbJour = 1;
+                    break;
+                    case 1:
+                    $nbJour = 1;
+                    break;
+                    case 2:
+                    $nbJour = 1.5;
+                    break;
+                    case 3:
+                    $nbJour = 2;
+                    break;
+                    case 4:
+                    $nbJour = 2.4;
+                    break;
+                    case 5:
+                    $nbJour = 2.7;
+                    break;
+                    case 6:
+                    $nbJour = 3;
+                    break;
+                    case 7:
+                    $nbJour = 3.3;
+                    break;
+                    case 8:
+                    $nbJour = 3.6;
+                    break;
+                    case 9:
+                    $nbJour = 3.9;
+                    break;
+                    case 10:
+                    $nbJour = 4.2;
+                    break;
+                    case 11:
+                    $nbJour = 4.5;
+                    break;
+                    case 12:
+                    $nbJour = 4.8;
+                    break;
+                    case 13:
+                    $nbJour = 5;
+                    break;
+                    default:
+                    $nbJour = $nbJour;
+                }
+            }
+
 
             $mail = (new TemplatedEmail())
                 ->from(Address::create('<thomas@weplus.fr>'))
@@ -174,6 +229,7 @@ class ContactController extends AbstractController
                     'data' => $data,
                     'dataPanier' => $dataPanier,
                     'total' => $total,
+                    '$nbJour' => $$nbJour,
                 ]);
 
 

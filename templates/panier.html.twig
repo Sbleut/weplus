@@ -88,10 +88,23 @@
 	</tfoot>
 </table>
 <div id="locaform" class="container">
-	{{ form(form, {'action': path('handlecontact')}) }}
 
-	{{ form_start(form) }}
-		
+	{{ form_start(form, {'action': path('handlecontact')}) }}
+		{{ form_row(form.start) }}
+		{{ form_row(form.hstart) }}
+		{{ form_row(form.end) }}
+		{{ form_row(form.hend) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.nom) }}
+
+		{{ form_row(form.ville) }}
+
+		{{ form_row(form.cp) }}
+
+		{{ form_row(form.adresse) }}
+
+		{{ form_row(form.submit) }}
+				
 
 	{{ form_end(form) }}
 
@@ -105,51 +118,86 @@
 
 
 <script>
-var startdate = new Date(document.getElementById("contact_loc_start").value);
-var enddate = new Date(document.getElementById("contact_loc_end").value);
+let inputStart = document.getElementById("contact_loc_start");
 
-datediff = (enddate - startdate) / (1000 * 60 * 60 * 24);
+let inputEnd = document.getElementById("contact_loc_end");
+
 
 var total = document.getElementsByClassName("totaux");
 
 let dateDiffSouvenir = 1; 
 
 function updateTotal() {
-var startdate = new Date(document.getElementById("contact_loc_start").value);
-var enddate = new Date(document.getElementById("contact_loc_end").value);
+var startdate = new Date(inputStart.value);
+var enddate = new Date(inputEnd.value);
 
 console.log(startdate);
 console.log(enddate);
 
-
 datediff = (enddate - startdate) / (1000 * 60 * 60 * 24);
 
+if (datediff >= 14){
+	datediff = ((datediff-13) * 0.2) + 5;
+}	else{
+	switch (datediff) {
+		case 0:
+		datediff = 1;
+		break;
+		case 1:
+		datediff = 1;
+		break;
+		case 2:
+		datediff = 1.5;
+		break;
+		case 3:
+		datediff = 2;
+		break;
+		case 4:
+		datediff = 2.4;
+		break;
+		case 5:
+		datediff = 2.7;
+		break;
+		case 6:
+		datediff = 3;
+		break;
+		case 7:
+		datediff = 3.3;
+		break;
+		case 8:
+		datediff = 3.6;
+		break;
+		case 9:
+		datediff = 3.9;
+		break;
+		case 10:
+		datediff = 4.2;
+		break;
+		case 11:
+		datediff = 4.5;
+		break;
+		case 12:
+		datediff = 4.8;
+		break;
+		case 13:
+		datediff = 5;
+		break;
+		default:
+		datediff = datediff;
+	}
+}
 	for (i = 0; i < total.length; i++) {
 		
-		newtotal = total[i].textContent * datediff / dateDiffSouvenir;
-		total[i].textContent = newtotal;
+		newtotal = (total[i].textContent / dateDiffSouvenir) * datediff ;
+		total[i].textContent = Math.round(newtotal);
 		console.log(newtotal, '<= new total');
 	}
 dateDiffSouvenir = datediff;
 return dateDiffSouvenir;
 };
 
-let inputStart = document.getElementById("contact_loc_end");
-
-let inputEnd = document.getElementById("contact_loc_start");
-
-
 inputStart.addEventListener("change", updateTotal);
 
 inputEnd.addEventListener("change", updateTotal);
 
-
-
-
-console.log(startdate);
-console.log(enddate);
-
-
-
-console.log(datediff);
 </script>{% endblock %}

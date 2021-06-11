@@ -50,7 +50,7 @@ class ContactLocType extends AbstractType
                     'min' => (new \DateTime())->format('d M Y'),
                 ],           
                 
-                'constraints' => [
+                'constraints' => [                               
                     new NotBlank(),
                 ]
             ])

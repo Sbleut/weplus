@@ -23,6 +23,7 @@ body .flash {
   position: absolute;
   z-index: 5;
   top: 30vh;
+  left: 40vh;
   display: flex;
   justify-content: center;
   color: white;

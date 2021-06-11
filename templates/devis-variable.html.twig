@@ -47,8 +47,8 @@
 							{{a.nameMatos}}
 						{% endfor %}
 						</td>
-						<td>{{element.matos.prixht}} €</td>
-						<td>{{(element.matos.prixHT)}}</td>
+						<td>{{element.matos.prixht * nbJour }} €</td>
+						<td>{{(element.matos.prixHT) * nbJour}}</td>
 						<td>2O,OO%</td>
 					</tr>
 					{% endfor %}
@@ -81,7 +81,7 @@
 					<table>
 						<tr>
 							<td>Total HT</td>
-							<td>{{total}}</td>
+							<td>{{total * nbJour}}</td>
 						</tr>
 						<tr>
 							<td>TVA</td>
@@ -89,7 +89,7 @@
 						</tr>
 						<tr>
 							<td>Total TTC</td>
-							<td>{{total * 1.2}}</td>
+							<td>{{total * 1.2 * nbJour}}</td>
 						</tr>
 					</table>
 				</div>
