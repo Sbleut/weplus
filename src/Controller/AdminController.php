@@ -49,12 +49,12 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/edit/{id}", name="admin_edit", methods={"GET","POST"})
+     * @Route("/admin/edit/{id}", name="edit-admin", methods={"GET","POST"})
      */
     public function edit(Request $request, UserPasswordEncoderInterface $encoder, Admins $admin): Response {
         $oldPassword = $admin->getPassword();
 
-        $form = $this->createForm(AdminType::class, $admin);
+        $form = $this->createForm(AdminsType::class, $admin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,7 +72,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('gerer-admin');
         }
 
-        return $this->render('admin/edit.html.twig', [
+        return $this->render('admin/update-admin.html.twig', [
             'admin' => $admin,
             'form' => $form->createView(),
         ]);
@@ -93,5 +93,19 @@ class AdminController extends AbstractController
             'admins' => $admins
         ]);
     }
+
+     /**
+     * @Route("/{id}", name="delete-admin", methods={"DELETE"})
+     */
+    public function delete(Request $request, Admins $admin): Response {
+        if ($this->isCsrfTokenValid('delete' . $admin->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($admin);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('utilisateur_index');
+    }
+
 }
       

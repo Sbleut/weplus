@@ -16,6 +16,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class StaticController extends AbstractController
 {
     /**
+     * @Route("/", name="root")
+     * 
+     */
+    public function root()
+    {
+        return $this->redirect('/accueil');
+    }
+    /**
      * @Route("/accueil", name="accueil") 
      * 
      */
