@@ -23,10 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-/**
- * 
- * @IsGranted("ROLE_USER")
- */
+
 class ContactController extends AbstractController
 {
     /**
@@ -165,9 +162,10 @@ class ContactController extends AbstractController
             
             
 
-            $$nbJour = (date_timestamp_get($data['end']) - date_timestamp_get($data['start']))/ (60 * 60 * 24);
+            $nbJour = (date_timestamp_get($data['end']) - date_timestamp_get($data['start']))/ (60 * 60 * 24);
+            
 
-            if ($$nbJour >= 14){
+            if ($nbJour >= 14){
                 $nbJour = (($nbJour-13) * 0.2) + 5;
             }	else{
                 switch ($nbJour) {
@@ -218,10 +216,9 @@ class ContactController extends AbstractController
                 }
             }
 
-
             $mail = (new TemplatedEmail())
                 ->from(Address::create('<thomas@weplus.fr>'))
-                ->to('thomas.sublet@gmail.com')
+                ->to('location@weplus.fr')
                 ->replyTo($data['email'])
                 ->subject('Demande de Location')
                 ->htmlTemplate('devis-variable.html.twig')
@@ -229,7 +226,7 @@ class ContactController extends AbstractController
                     'data' => $data,
                     'dataPanier' => $dataPanier,
                     'total' => $total,
-                    '$nbJour' => $$nbJour,
+                    'nbJour' => $nbJour,
                 ]);
 
 

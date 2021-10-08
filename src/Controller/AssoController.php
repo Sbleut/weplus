@@ -18,10 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Filesystem\Filesystem;
 
 
-/**
- * 
- * @IsGranted("ROLE_USER")
- */
+
 class AssoController extends AbstractController
 {
     /**

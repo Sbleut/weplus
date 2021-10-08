@@ -11,10 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * 
- * @IsGranted("ROLE_USER")
- */
+
 
 class AdminController extends AbstractController
 {
@@ -95,16 +92,22 @@ class AdminController extends AbstractController
     }
 
      /**
-     * @Route("/{id}", name="delete-admin", methods={"DELETE"})
+     * @Route("/delete/admin/{id}", name="delete-admin")
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * 
      */
-    public function delete(Request $request, Admins $admin): Response {
-        if ($this->isCsrfTokenValid('delete' . $admin->getId(), $request->request->get('_token'))) {
+    public function delete($id): Response {
+        //if ($this->isCsrfTokenValid('delete' . $admin->getId(), $request->request->get('_token'))) {
+            $repo = $this->getDoctrine()->getRepository(Admins::class);
+            $admin = $repo->find($id);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($admin);
             $entityManager->flush();
-        }
+        //}
 
-        return $this->redirectToRoute('utilisateur_index');
+        return $this->redirectToRoute('gerer-admin');
     }
 
 }

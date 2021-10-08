@@ -9,10 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * 
- * @IsGranted("ROLE_USER")
- */
+
 class StaticController extends AbstractController
 {
     /**
@@ -21,7 +18,7 @@ class StaticController extends AbstractController
      */
     public function root()
     {
-        return $this->redirect('/accueil');
+        return $this->redirect('/services-by-catego/5');
     }
     /**
      * @Route("/accueil", name="accueil") 

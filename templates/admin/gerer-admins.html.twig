@@ -28,7 +28,7 @@
 						<td>{{ a.email }}</td>
 
 						<td>
-							<a href="{{ path( 'delete-admin', {'id': a.id} ) }}" title="Supprimer ce comtpe" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
+							<a href="{{ path('delete-admin', {'id': a.id}) }}" title="Supprimer ce comtpe" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr ?')">
 								<i class="fas fa-trash"></i>
 							</a>
 							<a href="{{ path('edit-admin', {'id': a.id}) }}" title="Modifier ce compte" class="btn btn-primary">
@@ -55,7 +55,7 @@
 	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script>
 		$(document).ready(function () {
-$('#table').DataTable();
-});
+		$('#table').DataTable();
+		});
 	</script>
 {% endblock %}

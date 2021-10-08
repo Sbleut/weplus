@@ -19,10 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
-/**
- * 
- * @IsGranted("ROLE_USER")
- */
+
 class ServicesController extends AbstractController
 {
     /**
