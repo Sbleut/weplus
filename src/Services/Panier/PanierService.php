@@ -21,7 +21,7 @@ class PanierService {
 
         $panier = $this->session->get("panier", []);
 
-        // On "fabrique" les données
+        // Panier data
         $dataPanier = [];
         $total = 0;
         $totalCaution = 0;
@@ -30,7 +30,7 @@ class PanierService {
         // Pour chaque IDproduit dans le panier on va chercher les infos relatives. 
         foreach ($panier as $equipement => [ 'id' => $id, 'accessoires_id' => $accessoires_id]) {
             $matos = $this->matosRepository->find($id);
-            // Les accessoires sont liés àleurs poduit par leur ID rangés dans un tableau 
+            // Les accessoires sont liés à leurs poduit par leur ID rangés dans un tableau 
             $accessoires = null;
             if($accessoires_id == null){
                 $accessoires_id[] = null;

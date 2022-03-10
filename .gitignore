@@ -8,6 +8,8 @@
 /public/bundles/
 /var/
 /vendor/
+/public/assets/img
+public/assets/formation
 /migrations
 ###< symfony/framework-bundle ###
 
