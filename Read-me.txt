@@ -1,0 +1,9 @@
+Projet de stage de fin de formation.
+
+Le challenge :
+
+Réaliser la refonte d'un site en moins de 2 mois, en solo.
+Cahier des charges
+Wireframe sous figma
+Une partie stratégie SEO expressions clés dynamique.
+Une partie location matériel audiovisuel avec devis et accessoires, 
